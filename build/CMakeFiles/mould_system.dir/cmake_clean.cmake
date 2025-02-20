@@ -21,6 +21,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj.d"
   "CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj"
   "CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj.d"
+  "CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj"
+  "CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj.d"
   "CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj"
   "CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj.d"
   "CMakeFiles/mould_system_autogen.dir/AutogenUsed.txt"

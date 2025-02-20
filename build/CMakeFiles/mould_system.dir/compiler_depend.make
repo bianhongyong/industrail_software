@@ -23,6 +23,8 @@ CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj: D:/qt_apply/Mould_
 
 CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj: D:/qt_apply/Mould_system/mould_system/widgets/customvideo.cpp
 
+CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj: D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp
+
 CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj: D:/qt_apply/Mould_system/mould_system/widgets/scalablelabel.cpp
 
 
@@ -47,5 +49,7 @@ mould_system_autogen/EWIEGA46WW/qrc_resource.cpp:
 D:/qt_apply/Mould_system/mould_system/widgets/customListwidget.cpp:
 
 D:/qt_apply/Mould_system/mould_system/widgets/customvideo.cpp:
+
+D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp:
 
 D:/qt_apply/Mould_system/mould_system/widgets/scalablelabel.cpp:

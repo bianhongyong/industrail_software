@@ -3,4 +3,5 @@
 #include "EWIEGA46WW/moc_label.cpp"
 #include "IMAN36LHMA/moc_customListwidget.cpp"
 #include "IMAN36LHMA/moc_customvideo.cpp"
+#include "IMAN36LHMA/moc_extendedcombobox.cpp"
 #include "IMAN36LHMA/moc_scalablelabel.cpp"

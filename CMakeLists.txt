@@ -46,6 +46,7 @@ set(PROJECT_SOURCES
         widgets/scalablelabel.h
         widgets/customvideo.h widgets/customvideo.cpp
         widgets/scalablelabel.cpp
+        widgets/extendedcombobox.h widgets/extendedcombobox.cpp
         manager/annotation_manager.h
         manager/annotation_manager.cpp
         resource.qrc

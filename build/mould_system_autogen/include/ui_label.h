@@ -120,7 +120,7 @@ public:
         scrollArea->setAlignment(Qt::AlignCenter);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 711, 751));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 621, 751));
         verticalLayout_5 = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         image = new ScalableLabel(scrollAreaWidgetContents);

@@ -1,8 +1,10 @@
 ﻿#include "collect.h"
 #include "./ui_collect.h"
 #include <QMessageBox>
+#include <QDebug>
 #include <QStandardPaths>
 #include <QUuid>
+#include <QLineEdit>
 collect::collect(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::collect),
@@ -15,7 +17,7 @@ collect::collect(QWidget *parent) :
     ui->setupUi(this);
     /*准备工作*/
     getCameras();
-
+    ui->size->setCurrentIndex(3);
     lastCameraCount = Cameralist->count();
     //qDebug()<<lastCameraCount;
     // 设置定时器
@@ -24,6 +26,8 @@ collect::collect(QWidget *parent) :
     deviceCheckTimer->start();
     imageCapture = new QCameraImageCapture(Camera, this);
     connect(imageCapture, &QCameraImageCapture::imageCaptured, this, &collect::onImageCaptured);
+    
+    
 }
 
 collect::~collect()
@@ -45,12 +49,6 @@ void collect::getCameras()
     }
     ui->comboBox->addItems(description_list);
 }
-
-void collect::startCamera()
-{
-
-}
-
 void collect::on_comboBox_currentIndexChanged(const QString &arg1)
 {
     //qDebug()<<Camera;
@@ -65,6 +63,7 @@ void collect::on_comboBox_currentIndexChanged(const QString &arg1)
         Camera = new QCamera(Cameralist->at(ui->comboBox->currentIndex()), this);
         Camera->setViewfinder(ui->video);
         Camera->start();
+        
     }
 
 }
@@ -118,7 +117,29 @@ void collect::handleDeviceChange()
     lastCameraCount = currentCount;
 }
 
-void collect::on_shot_clicked()
+void collect::onImageCaptured(int id, const QImage &preview)
+{
+    Q_UNUSED(id);
+    ui->size->lineEdit()->editingFinished();
+    QString resolution = ui->size->currentText();
+    QStringList res = resolution.split(QString::fromLocal8Bit("×"));
+    int width = res[0].toInt();
+    
+    int height = res[1].toInt();
+    
+    QImage scaledImage = preview.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    
+    // 生成随机文件名
+    QString filePath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/" + QUuid::createUuid().toString() + ".jpg";
+    if (scaledImage.save(filePath)) {
+        QMessageBox::information(this, QString::fromLocal8Bit("拍照成功"), QString::fromLocal8Bit("图片已保存到: ") + filePath);
+    } else {
+        QMessageBox::warning(this, QString::fromLocal8Bit("拍照失败"), QString::fromLocal8Bit("图片保存失败"));
+    }
+}
+
+
+void collect::on_action_shot_triggered()
 {
 
     if (Camera && Camera->state() == QCamera::ActiveState) {
@@ -128,22 +149,16 @@ void collect::on_shot_clicked()
             connect(imageCapture, &QCameraImageCapture::imageCaptured, this, &collect::onImageCaptured);
         }
         imageCapture->capture();
-    } 
+    }
     else {
         QMessageBox::warning(this, QString::fromLocal8Bit("拍照失败"), QString::fromLocal8Bit("摄像头未启动"));
     }
 }
-
-void collect::onImageCaptured(int id, const QImage &preview)
+void collect::setCameraResolution(const QSize &resolution)
 {
-    //qDebug()<<imageCapture->isReadyForCapture();
-    Q_UNUSED(id);
-    // 生成随机文件名
-    QString filePath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation) + "/" + QUuid::createUuid().toString() + ".jpg";
-    if (preview.save(filePath)) {
-        QMessageBox::information(this, QString::fromLocal8Bit("拍照成功"), QString::fromLocal8Bit("图片已保存到: ") + filePath);
-    } else {
-        QMessageBox::warning(this, QString::fromLocal8Bit("拍照失败"), QString::fromLocal8Bit("图片保存失败"));
+    if (Camera) {
+        QCameraViewfinderSettings viewfinderSettings;
+        viewfinderSettings.setResolution(resolution);
+        Camera->setViewfinderSettings(viewfinderSettings);
     }
 }
-

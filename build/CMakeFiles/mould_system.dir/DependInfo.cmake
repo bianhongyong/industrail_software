@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "D:/qt_apply/Mould_system/mould_system/widgets/Abstract.cpp" "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/widgets/customListwidget.cpp" "CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/widgets/customvideo.cpp" "CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj.d"
+  "D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp" "CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/widgets/scalablelabel.cpp" "CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj.d"
   )
 

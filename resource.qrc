@@ -38,5 +38,8 @@
         <file>icons/min.png</file>
         <file>icons/normal.png</file>
         <file>icons/Tianjin_university.jpg</file>
+        <file>icons/collect.png</file>
+        <file>icons/settings.png</file>
+        <file>icons/shot.png</file>
     </qresource>
 </RCC>

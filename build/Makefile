@@ -406,6 +406,30 @@ widgets/customvideo.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/customvideo.cpp.s
 .PHONY : widgets/customvideo.cpp.s
 
+widgets/extendedcombobox.obj: widgets/extendedcombobox.cpp.obj
+.PHONY : widgets/extendedcombobox.obj
+
+# target to build an object file
+widgets/extendedcombobox.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj
+.PHONY : widgets/extendedcombobox.cpp.obj
+
+widgets/extendedcombobox.i: widgets/extendedcombobox.cpp.i
+.PHONY : widgets/extendedcombobox.i
+
+# target to preprocess a source file
+widgets/extendedcombobox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.i
+.PHONY : widgets/extendedcombobox.cpp.i
+
+widgets/extendedcombobox.s: widgets/extendedcombobox.cpp.s
+.PHONY : widgets/extendedcombobox.s
+
+# target to generate assembly for a file
+widgets/extendedcombobox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.s
+.PHONY : widgets/extendedcombobox.cpp.s
+
 widgets/scalablelabel.obj: widgets/scalablelabel.cpp.obj
 .PHONY : widgets/scalablelabel.obj
 
@@ -473,6 +497,9 @@ help:
 	@echo "... widgets/customvideo.obj"
 	@echo "... widgets/customvideo.i"
 	@echo "... widgets/customvideo.s"
+	@echo "... widgets/extendedcombobox.obj"
+	@echo "... widgets/extendedcombobox.i"
+	@echo "... widgets/extendedcombobox.s"
 	@echo "... widgets/scalablelabel.obj"
 	@echo "... widgets/scalablelabel.i"
 	@echo "... widgets/scalablelabel.s"

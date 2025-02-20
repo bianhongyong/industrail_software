@@ -84,6 +84,7 @@ mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/zoom.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/new.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/labels.png
+mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/settings.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/undo-cross.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/normal.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/open.png
@@ -103,12 +104,14 @@ mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/delete.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/color.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/prev.png
+mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/shot.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/close.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/fit-window.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/eye.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/copy.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/zoom-in.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/quit.png
+mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/qt_apply/Mould_system/mould_system/icons/collect.png
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/bin/rcc.exe
 mould_system_autogen/EWIEGA46WW/qrc_resource.cpp: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/bin/rcc.exe
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic RCC for resource.qrc"
@@ -254,10 +257,24 @@ CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.s"
 	"D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.s /c D:/qt_apply/Mould_system/mould_system/widgets/scalablelabel.cpp
 
+CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj: CMakeFiles/mould_system.dir/flags.make
+CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj: D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp
+CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj: CMakeFiles/mould_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj"
+	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj.d --working-dir=D:/qt_apply/Mould_system/mould_system/build --filter-prefix="注意: 包含文件:  " -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj /FdCMakeFiles/mould_system.dir/ /FS -c D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp
+
+CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.i"
+	"D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe" > CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.i  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp
+
+CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.s"
+	"D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.s /c D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp
+
 CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj: CMakeFiles/mould_system.dir/flags.make
 CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj: D:/qt_apply/Mould_system/mould_system/manager/annotation_manager.cpp
 CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj: CMakeFiles/mould_system.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj"
 	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj.d --working-dir=D:/qt_apply/Mould_system/mould_system/build --filter-prefix="注意: 包含文件:  " -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj /FdCMakeFiles/mould_system.dir/ /FS -c D:/qt_apply/Mould_system/mould_system/manager/annotation_manager.cpp
 
 CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.i: cmake_force
@@ -271,7 +288,7 @@ CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.s: cmake_force
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj: CMakeFiles/mould_system.dir/flags.make
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj: mould_system_autogen/EWIEGA46WW/qrc_resource.cpp
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj: CMakeFiles/mould_system.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj"
 	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj.d --working-dir=D:/qt_apply/Mould_system/mould_system/build --filter-prefix="注意: 包含文件:  " -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj /FdCMakeFiles/mould_system.dir/ /FS -c D:/qt_apply/Mould_system/mould_system/build/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp
 
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.i: cmake_force
@@ -294,6 +311,7 @@ mould_system_OBJECTS = \
 "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj" \
 "CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj" \
 "CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj" \
+"CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj" \
 "CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj" \
 "CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj"
 
@@ -310,6 +328,7 @@ mould_system.exe: CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/widgets/customvideo.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj
+mould_system.exe: CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/build.make
@@ -321,7 +340,7 @@ mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Gui.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Core.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/qtmain.lib
 mould_system.exe: CMakeFiles/mould_system.dir/objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable mould_system.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable mould_system.exe"
 	D:/software/CMake/bin/cmake.exe -E vs_link_exe --intdir=CMakeFiles/mould_system.dir --rc="D:/Windows Kits/10/bin/10.0.17763.0/x64/rc.exe" --mt="D:/Windows Kits/10/bin/10.0.17763.0/x64/mt.exe" --manifests -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/link.exe" /nologo @CMakeFiles/mould_system.dir/objects1.rsp  /out:mould_system.exe /implib:mould_system.lib /pdb:D:/qt_apply/Mould_system/mould_system/build/mould_system.pdb /version:0.0 /machine:x64 /INCREMENTAL:NO /subsystem:windows  D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5MultimediaWidgets.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Widgets.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Multimedia.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Network.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Gui.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Core.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/qtmain.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
 
 # Rule to build all files generated by this target.

@@ -6,91 +6,294 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1001</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="CustomVideo" name="video" native="true"/>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QFrame" name="frame_2">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+       <widget class="QToolBox" name="toolBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>26</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>相机:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>16</pointsize>
-            </font>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>18</pointsize>
+         </font>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="tabSpacing">
+         <number>6</number>
+        </property>
+        <widget class="QWidget" name="page1">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>609</width>
+           <height>123</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>图像源</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="camera">
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>18</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>相机:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="comboBox">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>16</pointsize>
+               </font>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="image_re">
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>18</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>图片分辨率:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="ExtendedComboBox" name="size">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <item>
+               <property name="text">
+                <string>640×480</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>800×600</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>1024×768</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>1280×720</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>1280×768</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>1920×1080</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>2560×1440</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>3840×2160</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="video_re">
+              <property name="font">
+               <font>
+                <pointsize>18</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>视频分辨率</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="image_re1">
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string>1280×720</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>623</width>
+           <height>102</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>模具参数选择与录入</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QFormLayout" name="formLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>模具选择:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="comboBox_2"/>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>模具参数管理</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>623</width>
+           <height>102</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>其他</string>
+         </attribute>
+        </widget>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="shot">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>24</pointsize>
-         </font>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-        <property name="text">
-         <string>拍照</string>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>78</width>
+          <height>88</height>
+         </size>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>22</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>自动采集</string>
-        </property>
-       </widget>
+       </spacer>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="CustomVideo" name="video" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>300</width>
+        <height>300</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -99,24 +302,88 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1001</width>
      <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_usb">
+  <widget class="QToolBar" name="toolBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::AllToolBarAreas</set>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>36</width>
+     <height>36</height>
+    </size>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+   <addaction name="action_shot"/>
+   <addaction name="action_collect"/>
+   <addaction name="action_settings"/>
+  </widget>
+  <action name="action_shot">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/shot.png</normaloff>:/icons/icons/shot.png</iconset>
+   </property>
    <property name="text">
-    <string>搜索usb口</string>
+    <string>拍照</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;搜索usb口&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>拍照保存</string>
    </property>
    <property name="font">
     <font>
      <family>Arial</family>
      <pointsize>28</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="action_collect">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/collect.png</normaloff>:/icons/icons/collect.png</iconset>
+   </property>
+   <property name="text">
+    <string>自动采集</string>
+   </property>
+  </action>
+  <action name="action_settings">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/settings.png</normaloff>:/icons/icons/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>设置</string>
    </property>
   </action>
  </widget>
@@ -127,7 +394,15 @@
    <header location="global">widgets/customvideo.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>ExtendedComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">widgets/extendedcombobox.h</header>
+  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_collect_t {
     QByteArrayData data[10];
-    char stringdata0[127];
+    char stringdata0[136];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,16 +37,16 @@ QT_MOC_LITERAL(2, 40, 0), // ""
 QT_MOC_LITERAL(3, 41, 4), // "arg1"
 QT_MOC_LITERAL(4, 46, 18), // "checkCameraDevices"
 QT_MOC_LITERAL(5, 65, 18), // "handleDeviceChange"
-QT_MOC_LITERAL(6, 84, 15), // "on_shot_clicked"
-QT_MOC_LITERAL(7, 100, 15), // "onImageCaptured"
-QT_MOC_LITERAL(8, 116, 2), // "id"
-QT_MOC_LITERAL(9, 119, 7) // "preview"
+QT_MOC_LITERAL(6, 84, 15), // "onImageCaptured"
+QT_MOC_LITERAL(7, 100, 2), // "id"
+QT_MOC_LITERAL(8, 103, 7), // "preview"
+QT_MOC_LITERAL(9, 111, 24) // "on_action_shot_triggered"
 
     },
     "collect\0on_comboBox_currentIndexChanged\0"
     "\0arg1\0checkCameraDevices\0handleDeviceChange\0"
-    "on_shot_clicked\0onImageCaptured\0id\0"
-    "preview"
+    "onImageCaptured\0id\0preview\0"
+    "on_action_shot_triggered"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,15 +67,15 @@ static const uint qt_meta_data_collect[] = {
        1,    1,   39,    2, 0x09 /* Protected */,
        4,    0,   42,    2, 0x09 /* Protected */,
        5,    0,   43,    2, 0x09 /* Protected */,
-       6,    0,   44,    2, 0x08 /* Private */,
-       7,    2,   45,    2, 0x08 /* Private */,
+       6,    2,   44,    2, 0x08 /* Private */,
+       9,    0,   49,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    3,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::QImage,    7,    8,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, QMetaType::QImage,    8,    9,
 
        0        // eod
 };
@@ -89,8 +89,8 @@ void collect::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 0: _t->on_comboBox_currentIndexChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 1: _t->checkCameraDevices(); break;
         case 2: _t->handleDeviceChange(); break;
-        case 3: _t->on_shot_clicked(); break;
-        case 4: _t->onImageCaptured((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< const QImage(*)>(_a[2]))); break;
+        case 3: _t->onImageCaptured((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< const QImage(*)>(_a[2]))); break;
+        case 4: _t->on_action_shot_triggered(); break;
         default: ;
         }
     }

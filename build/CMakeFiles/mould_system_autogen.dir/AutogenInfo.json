@@ -131,6 +131,12 @@
 			null
 		],
 		[
+			"D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.h",
+			"MU",
+			"IMAN36LHMA/moc_extendedcombobox.cpp",
+			null
+		],
+		[
 			"D:/qt_apply/Mould_system/mould_system/widgets/scalablelabel.h",
 			"MU",
 			"IMAN36LHMA/moc_scalablelabel.cpp",
@@ -211,6 +217,11 @@
 		],
 		[
 			"D:/qt_apply/Mould_system/mould_system/widgets/customvideo.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/qt_apply/Mould_system/mould_system/widgets/extendedcombobox.cpp",
 			"MU",
 			null
 		],
