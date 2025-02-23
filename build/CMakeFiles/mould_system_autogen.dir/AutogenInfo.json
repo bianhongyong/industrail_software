@@ -74,6 +74,11 @@
 		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Multimedia/Qt5Multimedia_WMFServicePlugin.cmake",
 		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5MultimediaWidgets/Qt5MultimediaWidgetsConfigVersion.cmake",
 		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5MultimediaWidgets/Qt5MultimediaWidgetsConfig.cmake",
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5SqlConfigVersion.cmake",
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5SqlConfig.cmake",
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5Sql_QODBCDriverPlugin.cmake",
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5Sql_QPSQLDriverPlugin.cmake",
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5Sql_QSQLiteDriverPlugin.cmake",
 		"D:/qt_apply/Mould_system/mould_system/resource.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "D:/qt_apply/Mould_system/mould_system",
@@ -86,6 +91,18 @@
 			"D:/qt_apply/Mould_system/mould_system/ConfigManager.h",
 			"MU",
 			"EWIEGA46WW/moc_ConfigManager.cpp",
+			null
+		],
+		[
+			"D:/qt_apply/Mould_system/mould_system/IDatabaseManager.h",
+			"MU",
+			"EWIEGA46WW/moc_IDatabaseManager.cpp",
+			null
+		],
+		[
+			"D:/qt_apply/Mould_system/mould_system/SqlDatabaseManager.h",
+			"MU",
+			"EWIEGA46WW/moc_SqlDatabaseManager.cpp",
 			null
 		],
 		[
@@ -113,9 +130,21 @@
 			null
 		],
 		[
+			"D:/qt_apply/Mould_system/mould_system/param_manager.h",
+			"MU",
+			"EWIEGA46WW/moc_param_manager.cpp",
+			null
+		],
+		[
 			"D:/qt_apply/Mould_system/mould_system/widgets/Abstract.h",
 			"MU",
 			"IMAN36LHMA/moc_Abstract.cpp",
+			null
+		],
+		[
+			"D:/qt_apply/Mould_system/mould_system/widgets/CustomTabView.h",
+			"MU",
+			"IMAN36LHMA/moc_CustomTabView.cpp",
 			null
 		],
 		[
@@ -154,6 +183,7 @@
 		"QT_MULTIMEDIA_LIB",
 		"QT_NETWORK_LIB",
 		"QT_NO_DEBUG",
+		"QT_SQL_LIB",
 		"QT_WIDGETS_LIB",
 		"WIN32"
 	],
@@ -176,7 +206,8 @@
 		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/mkspecs/win32-msvc",
 		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtMultimedia",
 		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtNetwork",
-		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtMultimediaWidgets"
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtMultimediaWidgets",
+		"D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtSql"
 	],
 	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
 	"MOC_OPTIONS" : [],
@@ -196,6 +227,11 @@
 	"SOURCES" : 
 	[
 		[ "D:/qt_apply/Mould_system/mould_system/ConfigManager.cpp", "MU", null ],
+		[
+			"D:/qt_apply/Mould_system/mould_system/SqlDatabaseManager.cpp",
+			"MU",
+			null
+		],
 		[ "D:/qt_apply/Mould_system/mould_system/collect.cpp", "MU", null ],
 		[ "D:/qt_apply/Mould_system/mould_system/global.cpp", "MU", null ],
 		[ "D:/qt_apply/Mould_system/mould_system/label.cpp", "MU", null ],
@@ -205,8 +241,14 @@
 			"MU",
 			null
 		],
+		[ "D:/qt_apply/Mould_system/mould_system/param_manager.cpp", "MU", null ],
 		[
 			"D:/qt_apply/Mould_system/mould_system/widgets/Abstract.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/qt_apply/Mould_system/mould_system/widgets/CustomTabView.cpp",
 			"MU",
 			null
 		],

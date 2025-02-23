@@ -166,6 +166,30 @@ ConfigManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/ConfigManager.cpp.s
 .PHONY : ConfigManager.cpp.s
 
+SqlDatabaseManager.obj: SqlDatabaseManager.cpp.obj
+.PHONY : SqlDatabaseManager.obj
+
+# target to build an object file
+SqlDatabaseManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.obj
+.PHONY : SqlDatabaseManager.cpp.obj
+
+SqlDatabaseManager.i: SqlDatabaseManager.cpp.i
+.PHONY : SqlDatabaseManager.i
+
+# target to preprocess a source file
+SqlDatabaseManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.i
+.PHONY : SqlDatabaseManager.cpp.i
+
+SqlDatabaseManager.s: SqlDatabaseManager.cpp.s
+.PHONY : SqlDatabaseManager.s
+
+# target to generate assembly for a file
+SqlDatabaseManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.s
+.PHONY : SqlDatabaseManager.cpp.s
+
 collect.obj: collect.cpp.obj
 .PHONY : collect.obj
 
@@ -334,6 +358,30 @@ mould_system_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/mould_system_autogen/mocs_compilation.cpp.s
 .PHONY : mould_system_autogen/mocs_compilation.cpp.s
 
+param_manager.obj: param_manager.cpp.obj
+.PHONY : param_manager.obj
+
+# target to build an object file
+param_manager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/param_manager.cpp.obj
+.PHONY : param_manager.cpp.obj
+
+param_manager.i: param_manager.cpp.i
+.PHONY : param_manager.i
+
+# target to preprocess a source file
+param_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/param_manager.cpp.i
+.PHONY : param_manager.cpp.i
+
+param_manager.s: param_manager.cpp.s
+.PHONY : param_manager.s
+
+# target to generate assembly for a file
+param_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/param_manager.cpp.s
+.PHONY : param_manager.cpp.s
+
 widgets/Abstract.obj: widgets/Abstract.cpp.obj
 .PHONY : widgets/Abstract.obj
 
@@ -357,6 +405,30 @@ widgets/Abstract.s: widgets/Abstract.cpp.s
 widgets/Abstract.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/Abstract.cpp.s
 .PHONY : widgets/Abstract.cpp.s
+
+widgets/CustomTabView.obj: widgets/CustomTabView.cpp.obj
+.PHONY : widgets/CustomTabView.obj
+
+# target to build an object file
+widgets/CustomTabView.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/CustomTabView.cpp.obj
+.PHONY : widgets/CustomTabView.cpp.obj
+
+widgets/CustomTabView.i: widgets/CustomTabView.cpp.i
+.PHONY : widgets/CustomTabView.i
+
+# target to preprocess a source file
+widgets/CustomTabView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/CustomTabView.cpp.i
+.PHONY : widgets/CustomTabView.cpp.i
+
+widgets/CustomTabView.s: widgets/CustomTabView.cpp.s
+.PHONY : widgets/CustomTabView.s
+
+# target to generate assembly for a file
+widgets/CustomTabView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/widgets/CustomTabView.cpp.s
+.PHONY : widgets/CustomTabView.cpp.s
 
 widgets/customListwidget.obj: widgets/customListwidget.cpp.obj
 .PHONY : widgets/customListwidget.obj
@@ -467,6 +539,9 @@ help:
 	@echo "... ConfigManager.obj"
 	@echo "... ConfigManager.i"
 	@echo "... ConfigManager.s"
+	@echo "... SqlDatabaseManager.obj"
+	@echo "... SqlDatabaseManager.i"
+	@echo "... SqlDatabaseManager.s"
 	@echo "... collect.obj"
 	@echo "... collect.i"
 	@echo "... collect.s"
@@ -488,9 +563,15 @@ help:
 	@echo "... mould_system_autogen/mocs_compilation.obj"
 	@echo "... mould_system_autogen/mocs_compilation.i"
 	@echo "... mould_system_autogen/mocs_compilation.s"
+	@echo "... param_manager.obj"
+	@echo "... param_manager.i"
+	@echo "... param_manager.s"
 	@echo "... widgets/Abstract.obj"
 	@echo "... widgets/Abstract.i"
 	@echo "... widgets/Abstract.s"
+	@echo "... widgets/CustomTabView.obj"
+	@echo "... widgets/CustomTabView.i"
+	@echo "... widgets/CustomTabView.s"
 	@echo "... widgets/customListwidget.obj"
 	@echo "... widgets/customListwidget.i"
 	@echo "... widgets/customListwidget.s"

@@ -46,7 +46,7 @@
          </font>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="tabSpacing">
          <number>6</number>
@@ -56,8 +56,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>609</width>
-           <height>123</height>
+           <width>623</width>
+           <height>128</height>
           </rect>
          </property>
          <attribute name="label">
@@ -216,18 +216,31 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QFormLayout" name="formLayout_2">
-            <item row="0" column="0">
+            <item row="1" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
                <string>模具选择:</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="comboBox_2"/>
+            <item row="1" column="1">
+             <widget class="ExtendedComboBox" name="mould">
+              <property name="font">
+               <font>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QPushButton" name="pushButton">
+            <item row="2" column="0">
+             <widget class="QPushButton" name="lock">
+              <property name="text">
+               <string>锁定</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QPushButton" name="param">
               <property name="text">
                <string>模具参数管理</string>
               </property>
@@ -247,7 +260,7 @@
           </rect>
          </property>
          <attribute name="label">
-          <string>其他</string>
+          <string>缺陷检测</string>
          </attribute>
         </widget>
        </widget>
@@ -348,6 +361,7 @@
    <addaction name="separator"/>
    <addaction name="action_shot"/>
    <addaction name="action_collect"/>
+   <addaction name="action_label"/>
    <addaction name="action_settings"/>
   </widget>
   <action name="action_shot">
@@ -384,6 +398,15 @@
    </property>
    <property name="text">
     <string>设置</string>
+   </property>
+  </action>
+  <action name="action_label">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/label.png</normaloff>:/icons/icons/label.png</iconset>
+   </property>
+   <property name="text">
+    <string>标注</string>
    </property>
   </action>
  </widget>

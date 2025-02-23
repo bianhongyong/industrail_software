@@ -41,5 +41,6 @@
         <file>icons/collect.png</file>
         <file>icons/settings.png</file>
         <file>icons/shot.png</file>
+        <file>icons/label.png</file>
     </qresource>
 </RCC>

@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
@@ -24,8 +24,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  Sql REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets Sql REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -39,6 +39,9 @@ set(PROJECT_SOURCES
         collect.h
         collect.cpp
         collect.ui
+        param_manager.h param_manager.cpp param_manager.ui
+        widgets/CustomTabView.cpp
+        widgets/CustomTabView.h
         widgets/customListwidget.h
         widgets/customListwidget.cpp
         widgets/Abstract.h
@@ -50,6 +53,9 @@ set(PROJECT_SOURCES
         manager/annotation_manager.h
         manager/annotation_manager.cpp
         resource.qrc
+        IDatabaseManager.h
+        SqlDatabaseManager.h
+        SqlDatabaseManager.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -76,7 +82,8 @@ endif()
 
 target_link_libraries(mould_system PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Multimedia
-    Qt${QT_VERSION_MAJOR}::MultimediaWidgets)
+    Qt${QT_VERSION_MAJOR}::MultimediaWidgets
+    Qt${QT_VERSION_MAJOR}::Sql)
 
 set_target_properties(mould_system PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

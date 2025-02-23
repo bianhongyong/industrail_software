@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/mould_system_autogen"
   "mould_system_autogen/include/ui_collect.h"
   "mould_system_autogen/include/ui_label.h"
+  "mould_system_autogen/include/ui_param_manager.h"
   "mould_system_autogen/mocs_compilation.cpp"
 )
 

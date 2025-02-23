@@ -28,7 +28,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>621</width>
+         <width>711</width>
          <height>751</height>
         </rect>
        </property>
@@ -69,6 +69,7 @@
    <addaction name="actionZoom_out"/>
    <addaction name="actionPrevious_Image"/>
    <addaction name="actionNext_Image"/>
+   <addaction name="action_save"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -275,6 +276,15 @@
    </property>
    <property name="shortcut">
     <string>Right</string>
+   </property>
+  </action>
+  <action name="action_save">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/save-as.png</normaloff>:/icons/icons/save-as.png</iconset>
+   </property>
+   <property name="text">
+    <string>save</string>
    </property>
   </action>
  </widget>

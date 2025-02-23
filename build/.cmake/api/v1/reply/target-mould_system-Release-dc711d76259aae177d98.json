@@ -40,13 +40,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 66,
+				"line" : 72,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 77,
+				"line" : 83,
 				"parent" : 0
 			},
 			{
@@ -147,7 +147,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++17"
 				}
 			],
 			"defines" : 
@@ -175,6 +175,10 @@
 				{
 					"backtrace" : 2,
 					"define" : "QT_NO_DEBUG"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_SQL_LIB"
 				},
 				{
 					"backtrace" : 2,
@@ -237,6 +241,11 @@
 					"backtrace" : 2,
 					"isSystem" : true,
 					"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtMultimediaWidgets"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/include/QtSql"
 				}
 			],
 			"language" : "CXX",
@@ -246,7 +255,7 @@
 				[
 					2
 				],
-				"standard" : "11"
+				"standard" : "17"
 			},
 			"sourceIndexes" : 
 			[
@@ -259,10 +268,13 @@
 				13,
 				15,
 				18,
-				19,
-				21,
+				20,
 				23,
-				27
+				24,
+				26,
+				28,
+				32,
+				36
 			]
 		}
 	],
@@ -289,6 +301,11 @@
 			{
 				"backtrace" : 2,
 				"fragment" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5MultimediaWidgets.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Sql.lib",
 				"role" : "libraries"
 			},
 			{
@@ -350,10 +367,13 @@
 				13,
 				15,
 				18,
-				19,
-				21,
+				20,
 				23,
-				27
+				24,
+				26,
+				28,
+				32,
+				36
 			]
 		},
 		{
@@ -365,13 +385,18 @@
 				7,
 				9,
 				12,
-				14,
 				16,
 				17,
-				20,
+				19,
+				21,
 				22,
 				25,
-				26
+				27,
+				30,
+				31,
+				33,
+				34,
+				35
 			]
 		},
 		{
@@ -380,14 +405,15 @@
 			[
 				4,
 				11,
-				24
+				14,
+				29
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				28
+				37
 			]
 		}
 	],
@@ -462,6 +488,33 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "param_manager.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "param_manager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "param_manager.ui",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "widgets/CustomTabView.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "widgets/CustomTabView.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
 			"path" : "widgets/customListwidget.h",
 			"sourceGroupIndex" : 1
 		},
@@ -532,6 +585,22 @@
 			"sourceGroupIndex" : 2
 		},
 		{
+			"backtrace" : 1,
+			"path" : "IDatabaseManager.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "SqlDatabaseManager.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "SqlDatabaseManager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "build/mould_system_autogen/include/ui_label.h",
@@ -541,6 +610,12 @@
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "build/mould_system_autogen/include/ui_collect.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/mould_system_autogen/include/ui_param_manager.h",
 			"sourceGroupIndex" : 1
 		},
 		{

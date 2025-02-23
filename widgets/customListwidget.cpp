@@ -14,8 +14,6 @@
 CustomListWidget::CustomListWidget(QWidget *parent):QListWidget(parent),provider(nullptr),colors(QList<QColor>()){
      connect(this, &QListWidget::itemChanged, this, &CustomListWidget::onItemchanged);
      connect(this, &QListWidget::itemDoubleClicked, this, &CustomListWidget::onItemDoubleClicked);
-
-
 }
 
 CustomListWidget::~CustomListWidget()

@@ -6,7 +6,7 @@
 label::label(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::label)
-    ,config(QString(configFilePath))
+    ,config(QString(configFilePath))  // 初始化定时器
 {
     ui->setupUi(this);
 
@@ -24,17 +24,6 @@ label::label(QWidget *parent)
             ui->file_list->setCurrentRow(ui->file_list->currentRow()-1);
         }
     });
-//    QObject::connect(ui->actionZoom_in,&QAction::triggered, [this](){
-//        ui->image->scaleFactor *=1.15;
-
-//        if(ui->image->scaleFactor>4) ui->image->scaleFactor=4;
-//        ui->image->updatePixmap();
-//    });
-//    QObject::connect(ui->actionZoom_out,&QAction::triggered, [this](){
-//        ui->image->scaleFactor *=0.85;
-//        if(ui->image->scaleFactor<0.1) ui->image->scaleFactor=0.1;
-//        ui->image->updatePixmap();
-//    });
 
     QObject::connect(ui->image,&ScalableLabel::paint_signals,this,&label::paint_rect);
     QObject::connect(ui->image,&ScalableLabel::update_all_signal,this,&label::paint_update_slot);
@@ -42,7 +31,6 @@ label::label(QWidget *parent)
     QObject::connect(ui->label_list,&CustomListWidget::paint_update,this,&label::paint_update_slot);
     QObject::connect(ui->annotation_list,&CustomListWidget::delete_annotation,this,&label::delete_annotation_slot);
     QObject::connect(ui->file_list,&CustomListWidget::delete_all_annotations,this,&label::delete_all_annotations_slot);
-
 }
 
 label::~label()
@@ -227,6 +215,7 @@ void label::closeEvent(QCloseEvent *event){
     image_convert(ui->file_list->currentItem());
     Annotation_manager::save_json();
     event->accept();
+    emit this->close();
 }
 void label::paint_update_slot(){
     paint_original();
@@ -306,4 +295,3 @@ void label::on_not_labeld_toggled(bool checked)
 {
 
 }
-

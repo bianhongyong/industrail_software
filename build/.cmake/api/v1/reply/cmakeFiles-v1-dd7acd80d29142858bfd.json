@@ -287,6 +287,26 @@
 			"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5MultimediaWidgets/Qt5MultimediaWidgetsConfig.cmake"
 		},
 		{
+			"isExternal" : true,
+			"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5SqlConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5SqlConfig.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5Sql_QODBCDriverPlugin.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5Sql_QPSQLDriverPlugin.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Sql/Qt5Sql_QSQLiteDriverPlugin.cmake"
+		},
+		{
 			"path" : "resource.qrc"
 		}
 	],
