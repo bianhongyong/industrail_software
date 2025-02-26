@@ -34,19 +34,23 @@ private slots:
     void delete_annotation_slot(QListWidgetItem * item);
     void delete_all_annotations_slot();
     void on_not_labeld_toggled(bool checked);
+    void delete_imagefile_slot(QListWidgetItem * item);
+    void on_action_save_triggered();
 
 private:
     Ui::label *ui;
     QString image_path;
-
+    QMap<QString, QPixmap> imageCache;//图像缓冲区，最多存50副图像
     void load_label_list();
     void load_annotation_list();
+
 
     void load_config();
     QColor get_label_list_currentcolor() const;
     void image_convert(QListWidgetItem *previous);
     bool moveFile(const QString &sourcePath, const QString &destinationPath);
 
+    void copyRecursively(const QString &srcPath, const QString &destPath);
 protected:
     void closeEvent(QCloseEvent *event) override;
 

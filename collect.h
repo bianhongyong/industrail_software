@@ -55,7 +55,7 @@ private:
     QCameraImageCapture *imageCapture; // 用于拍照的对象
     QLabel *statusLabel1;
     QLabel *statusLabel2;
-    SQLDatabase my_database;            //自定义数据库
+    SQLDatabase *my_database;            //自定义数据库
     QSqlTableModel *model;              //数据库模型
     param_manager *ui_param;
 

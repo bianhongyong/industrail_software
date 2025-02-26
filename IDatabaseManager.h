@@ -14,7 +14,8 @@ struct DatabaseError {
 };
 
 // 抽象数据库接口类
-class IDatabaseInterface {
+class IDatabaseInterface:public QObject{
+    Q_OBJECT
 public:
     virtual ~IDatabaseInterface() = default;
 

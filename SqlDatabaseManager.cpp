@@ -5,10 +5,12 @@
 #include <QDebug>
 #include "SqlDatabaseManager.h"
 #include <QSqlRecord>
-SQLDatabase::SQLDatabase(const QString &driver)
-    :m_db(QSqlDatabase::addDatabase(driver,"connection")),m_driver(driver)  {}
+SQLDatabase::SQLDatabase(const QString &driver):m_db(QSqlDatabase::addDatabase(driver,"connection")),m_driver(driver)  {
+
+}
 
 SQLDatabase::~SQLDatabase() {
+    emit close_sql();
     close();
 }
 
@@ -35,6 +37,7 @@ void SQLDatabase::close() {
         m_db.close();
     }
     QSqlDatabase::removeDatabase(m_db.connectionName());
+
 }
 
 bool SQLDatabase::isOpen() const {

@@ -23,7 +23,7 @@ void ScalableLabel::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton) {
         //qDebug()<<"1";
         // 开始绘制
-        if(!isDrawing){
+        if(!isDrawing&&this->pixmap()!=nullptr){
             isDrawing = true;
             rectStart = event->pos();
             rectEnd = rectStart;

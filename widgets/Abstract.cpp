@@ -3,7 +3,7 @@
 #include<ConfigManager.h>
 #include<manager/annotation_manager.h>
 void Annoation_ContextMenuProvider::populateMenu(QMenu *menu, QListWidgetItem *item, CustomListWidget *one_list){
-    QAction *action1 = new QAction("删除选中标注", menu);
+    QAction *action1 = new QAction(QString::fromLocal8Bit("删除选中标注"), menu);
     QObject::connect(action1, &QAction::triggered, [item,one_list]() {
         emit one_list->delete_annotation(item);
     });
@@ -11,20 +11,20 @@ void Annoation_ContextMenuProvider::populateMenu(QMenu *menu, QListWidgetItem *i
     menu->addAction(action1);
 }
 void file_ContextMenuProvider::populateMenu(QMenu *menu, QListWidgetItem *item, CustomListWidget *one_list){
-    QAction *action1 = new QAction("删除选中文件", menu);
-    QObject::connect(action1, &QAction::triggered, [item,one_list]() {
-        //delete item;
+    QAction *action1 = new QAction(QString::fromLocal8Bit("删除选中文件"), menu);
+    QObject::connect(action1, &QAction::triggered, [item,one_list](){
+        emit one_list->delete_imagefile(item);//CustomListWidget发送信号交给label类处理
     });
     menu->addAction(action1);
 
-    QAction *action2 = new QAction("删除文件对应的标注", menu);
+    QAction *action2 = new QAction(QString::fromLocal8Bit(("删除文件对应的标注")), menu);
     QObject::connect(action2, &QAction::triggered, [item,one_list]() {
-        emit one_list->delete_all_annotations();
+        emit one_list->delete_all_annotations();//CustomListWidget发送信号交给label类处理
     });
     menu->addAction(action2);
 }
 void Label_ContextMenuProvider::populateMenu(QMenu *menu, QListWidgetItem *item,CustomListWidget *one_list){
-    QAction *action1 = new QAction("删除选中标签", menu);
+    QAction *action1 = new QAction(QString::fromLocal8Bit("删除选中标签"), menu);
     QObject::connect(action1, &QAction::triggered, [item,one_list]() {
         ConfigManager settings(configFilePath);
         int index = one_list->row(item);

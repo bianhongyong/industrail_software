@@ -20,12 +20,11 @@ collect::collect(QWidget *parent) :
     imageCapture(nullptr),
     statusLabel1(new QLabel(this)),  // 初始化第一个 QLabel
     statusLabel2(new QLabel(this)),   // 初始化第二个 QLabel
-    my_database(SQLDatabase("QODBC")),
+    my_database(new SQLDatabase("QODBC")),
     ui_param(nullptr),
     ui_label(new label),
     count(0)
 {
-
     ui->setupUi(this);
     /*准备工作*/
     getCameras();//扫描相机
@@ -65,6 +64,7 @@ collect::~collect()
     delete Cameralist;
     delete ui_param;
     delete ui_label;
+    delete my_database;
     if(deviceCheckTimer->isActive()) {
         deviceCheckTimer->stop();
     }
@@ -77,10 +77,10 @@ void collect::connectDatabase()
     params["host"] = "211.81.50.204";
     params["user"] = "bhy";
     params["password"] = "bhybhy123456";
-    my_database.open(params);//打开数据库
-    if(my_database.isOpen()){
+    my_database->open(params);//打开数据库
+    if(my_database->isOpen()){
       // 创建数据库模型
-      model = new QSqlTableModel(this, my_database.database());
+      model = new QSqlTableModel(nullptr, my_database->database());
       model->setTable("mould"); // 设置要操作的表名
       model->setEditStrategy(QSqlTableModel::OnManualSubmit); // 设置编辑策略为手动提交
       model->select();
@@ -142,7 +142,7 @@ void collect::checkCameraDevices()
         statusLabel1->setText(QString::fromLocal8Bit("显微摄像头连接状态: 断开"));
     }
 
-    if(this->my_database.isOpen()){
+    if(this->my_database->isOpen()){
         statusLabel2->setText(QString::fromLocal8Bit("数据库连接状态: 连接"));
     }
     else{
@@ -199,6 +199,7 @@ void collect::onImageCaptured(int id, const QImage &preview)
 
     if (scaledImage.save(filePath)) {
         ui_label->load_file_list(false);
+        QMessageBox::warning(this, QString::fromLocal8Bit("拍照成功"), QString::fromLocal8Bit("图片保存成功"));
     }
     else {
         QMessageBox::warning(this, QString::fromLocal8Bit("拍照失败"), QString::fromLocal8Bit("图片保存失败"));
@@ -215,6 +216,7 @@ void collect::on_action_shot_triggered()
             delete imageCapture;
             imageCapture = new QCameraImageCapture(Camera, this);
             connect(imageCapture, &QCameraImageCapture::imageCaptured, this, &collect::onImageCaptured);
+
         }
         imageCapture->capture();
     }
@@ -233,7 +235,7 @@ void collect::setCameraResolution(const QSize &resolution)
 
 void collect::on_param_clicked()
 {
-    if(my_database.isOpen()){
+    if(my_database->isOpen()){
         ui_param->show();
     }
     else{
@@ -243,7 +245,7 @@ void collect::on_param_clicked()
 
 void collect::populateMouldComboBox()
 {
-    if (!my_database.isOpen()) {
+    if (!my_database->isOpen()) {
         QMessageBox::critical(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("数据库未连接"));
         return;
     }

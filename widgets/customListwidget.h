@@ -34,9 +34,10 @@ protected slots:
 
 signals:
     void not_delete_label(const QString &label_name);
-    void paint_update();
-    void delete_annotation(QListWidgetItem *item);
-    void delete_all_annotations();
+    void paint_update();//重绘信号
+    void delete_annotation(QListWidgetItem *item);//删除一个标注信号
+    void delete_all_annotations();//删除一张图片所有标注信号
+    void delete_imagefile(QListWidgetItem *item);
 };
 
 #endif // CUSTOMLISTWIDGET_H

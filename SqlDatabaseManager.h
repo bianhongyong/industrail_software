@@ -5,8 +5,9 @@
 #include <QVector>
 #include <QStringList>
 #include <IDatabaseManager.h>
-
+#include <QObject>
 class SQLDatabase : public IDatabaseInterface {
+    Q_OBJECT
 public:
     SQLDatabase(const QString &driver);
     ~SQLDatabase() override;
@@ -44,4 +45,7 @@ private:
     void setError(int code, const QString &message);
     bool executeQuery(QSqlQuery &query);
     QString generateConnectionName() const;
+
+signals:
+    void close_sql();
 };

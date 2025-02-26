@@ -265,7 +265,7 @@
   </action>
   <action name="actionNext_Image">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="resource.qrc">
@@ -285,6 +285,9 @@
    </property>
    <property name="text">
     <string>save</string>
+   </property>
+   <property name="toolTip">
+    <string>导出图像与标注</string>
    </property>
   </action>
  </widget>
