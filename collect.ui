@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1001</width>
-    <height>500</height>
+    <width>1178</width>
+    <height>667</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>400</width>
+          <width>800</width>
           <height>0</height>
          </size>
         </property>
@@ -46,7 +46,7 @@
          </font>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <property name="tabSpacing">
          <number>6</number>
@@ -56,8 +56,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>623</width>
-           <height>128</height>
+           <width>800</width>
+           <height>147</height>
           </rect>
          </property>
          <attribute name="label">
@@ -206,8 +206,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>623</width>
-           <height>102</height>
+           <width>800</width>
+           <height>147</height>
           </rect>
          </property>
          <attribute name="label">
@@ -216,14 +216,14 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QFormLayout" name="formLayout_2">
-            <item row="1" column="0">
+            <item row="0" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
                <string>模具选择:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item row="0" column="1">
              <widget class="ExtendedComboBox" name="mould">
               <property name="font">
                <font>
@@ -232,14 +232,14 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="1" column="0">
              <widget class="QPushButton" name="lock">
               <property name="text">
                <string>锁定</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="1" column="1">
              <widget class="QPushButton" name="param">
               <property name="text">
                <string>模具参数管理</string>
@@ -255,8 +255,148 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>623</width>
-           <height>102</height>
+           <width>800</width>
+           <height>242</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>800</width>
+           <height>0</height>
+          </size>
+         </property>
+         <attribute name="label">
+          <string>电机控制</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QFormLayout" name="formLayout_3">
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="label_5">
+              <property name="font">
+               <font>
+                <pointsize>18</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+                <underline>false</underline>
+               </font>
+              </property>
+              <property name="text">
+               <string>速度修改</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>左右移动:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="speed_axle">
+              <property name="maximum">
+               <number>2000</number>
+              </property>
+              <property name="value">
+               <number>360</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>上下移动:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="speed_updown">
+              <property name="maximum">
+               <number>2000</number>
+              </property>
+              <property name="value">
+               <number>360</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>旋转:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSpinBox" name="speed_rotate">
+              <property name="maximum">
+               <number>2000</number>
+              </property>
+              <property name="value">
+               <number>50</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="1" column="2">
+             <widget class="QPushButton" name="move_up_3">
+              <property name="text">
+               <string>反转</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="move_right">
+              <property name="text">
+               <string>右移</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="move_left">
+              <property name="text">
+               <string>左移</string>
+              </property>
+              <property name="checkable">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="move_up_2">
+              <property name="text">
+               <string>正转</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="move_down">
+              <property name="text">
+               <string>下移</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="move_up">
+              <property name="text">
+               <string>上移</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page4">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>800</width>
+           <height>147</height>
           </rect>
          </property>
          <attribute name="label">
@@ -270,10 +410,13 @@
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>78</width>
-          <height>88</height>
+          <height>100</height>
          </size>
         </property>
        </spacer>
@@ -315,7 +458,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1001</width>
+     <width>1178</width>
      <height>21</height>
     </rect>
    </property>

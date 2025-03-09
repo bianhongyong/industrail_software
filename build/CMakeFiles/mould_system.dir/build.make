@@ -328,10 +328,24 @@ CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.s"
 	"D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.s /c D:/qt_apply/Mould_system/mould_system/SqlDatabaseManager.cpp
 
+CMakeFiles/mould_system.dir/serialcommunication.cpp.obj: CMakeFiles/mould_system.dir/flags.make
+CMakeFiles/mould_system.dir/serialcommunication.cpp.obj: D:/qt_apply/Mould_system/mould_system/serialcommunication.cpp
+CMakeFiles/mould_system.dir/serialcommunication.cpp.obj: CMakeFiles/mould_system.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/mould_system.dir/serialcommunication.cpp.obj"
+	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles/mould_system.dir/serialcommunication.cpp.obj.d --working-dir=D:/qt_apply/Mould_system/mould_system/build --filter-prefix="注意: 包含文件:  " -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles/mould_system.dir/serialcommunication.cpp.obj /FdCMakeFiles/mould_system.dir/ /FS -c D:/qt_apply/Mould_system/mould_system/serialcommunication.cpp
+
+CMakeFiles/mould_system.dir/serialcommunication.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mould_system.dir/serialcommunication.cpp.i"
+	"D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe" > CMakeFiles/mould_system.dir/serialcommunication.cpp.i  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:/qt_apply/Mould_system/mould_system/serialcommunication.cpp
+
+CMakeFiles/mould_system.dir/serialcommunication.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mould_system.dir/serialcommunication.cpp.s"
+	"D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles/mould_system.dir/serialcommunication.cpp.s /c D:/qt_apply/Mould_system/mould_system/serialcommunication.cpp
+
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj: CMakeFiles/mould_system.dir/flags.make
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj: mould_system_autogen/EWIEGA46WW/qrc_resource.cpp
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj: CMakeFiles/mould_system.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj"
 	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj.d --working-dir=D:/qt_apply/Mould_system/mould_system/build --filter-prefix="注意: 包含文件:  " -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe"  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj /FdCMakeFiles/mould_system.dir/ /FS -c D:/qt_apply/Mould_system/mould_system/build/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp
 
 CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.i: cmake_force
@@ -359,6 +373,7 @@ mould_system_OBJECTS = \
 "CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj" \
 "CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj" \
 "CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.obj" \
+"CMakeFiles/mould_system.dir/serialcommunication.cpp.obj" \
 "CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj"
 
 # External object files for target mould_system
@@ -379,10 +394,12 @@ mould_system.exe: CMakeFiles/mould_system.dir/widgets/scalablelabel.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/widgets/extendedcombobox.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/manager/annotation_manager.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/SqlDatabaseManager.cpp.obj
+mould_system.exe: CMakeFiles/mould_system.dir/serialcommunication.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj
 mould_system.exe: CMakeFiles/mould_system.dir/build.make
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5MultimediaWidgets.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Sql.lib
+mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5SerialPort.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Widgets.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Multimedia.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Network.lib
@@ -390,8 +407,8 @@ mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Gui.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Core.lib
 mould_system.exe: D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/qtmain.lib
 mould_system.exe: CMakeFiles/mould_system.dir/objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable mould_system.exe"
-	D:/software/CMake/bin/cmake.exe -E vs_link_exe --intdir=CMakeFiles/mould_system.dir --rc="D:/Windows Kits/10/bin/10.0.17763.0/x64/rc.exe" --mt="D:/Windows Kits/10/bin/10.0.17763.0/x64/mt.exe" --manifests -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/link.exe" /nologo @CMakeFiles/mould_system.dir/objects1.rsp  /out:mould_system.exe /implib:mould_system.lib /pdb:D:/qt_apply/Mould_system/mould_system/build/mould_system.pdb /version:0.0 /machine:x64 /INCREMENTAL:NO /subsystem:windows  D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5MultimediaWidgets.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Sql.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Widgets.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Multimedia.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Network.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Gui.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Core.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/qtmain.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:/qt_apply/Mould_system/mould_system/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable mould_system.exe"
+	D:/software/CMake/bin/cmake.exe -E vs_link_exe --intdir=CMakeFiles/mould_system.dir --rc="D:/Windows Kits/10/bin/10.0.17763.0/x64/rc.exe" --mt="D:/Windows Kits/10/bin/10.0.17763.0/x64/mt.exe" --manifests -- "D:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/link.exe" /nologo @CMakeFiles/mould_system.dir/objects1.rsp  /out:mould_system.exe /implib:mould_system.lib /pdb:D:/qt_apply/Mould_system/mould_system/build/mould_system.pdb /version:0.0 /machine:x64 /INCREMENTAL:NO /subsystem:windows  D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5MultimediaWidgets.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Sql.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5SerialPort.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Widgets.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Multimedia.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Network.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Gui.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/Qt5Core.lib D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/qtmain.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
 
 # Rule to build all files generated by this target.
 CMakeFiles/mould_system.dir/build: mould_system.exe

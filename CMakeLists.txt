@@ -24,8 +24,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  Sql REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets Sql REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  Sql serialport REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets Sql serialport REQUIRED)
 set(PROJECT_SOURCES
         main.cpp
         label.cpp
@@ -55,6 +55,8 @@ set(PROJECT_SOURCES
         IDatabaseManager.h
         SqlDatabaseManager.h
         SqlDatabaseManager.cpp
+        serialcommunication.cpp
+        serialcommunication.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -82,7 +84,8 @@ endif()
 target_link_libraries(mould_system PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Multimedia
     Qt${QT_VERSION_MAJOR}::MultimediaWidgets
-    Qt${QT_VERSION_MAJOR}::Sql)
+    Qt${QT_VERSION_MAJOR}::Sql
+    Qt${QT_VERSION_MAJOR}::SerialPort)
 
 set_target_properties(mould_system PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "D:/qt_apply/Mould_system/mould_system/build/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp" "CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/mould_system_autogen/EWIEGA46WW/qrc_resource.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/build/mould_system_autogen/mocs_compilation.cpp" "CMakeFiles/mould_system.dir/mould_system_autogen/mocs_compilation.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/mould_system_autogen/mocs_compilation.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/param_manager.cpp" "CMakeFiles/mould_system.dir/param_manager.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/param_manager.cpp.obj.d"
+  "D:/qt_apply/Mould_system/mould_system/serialcommunication.cpp" "CMakeFiles/mould_system.dir/serialcommunication.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/serialcommunication.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/widgets/Abstract.cpp" "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/widgets/CustomTabView.cpp" "CMakeFiles/mould_system.dir/widgets/CustomTabView.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/CustomTabView.cpp.obj.d"
   "D:/qt_apply/Mould_system/mould_system/widgets/customListwidget.cpp" "CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj" "msvc" "CMakeFiles/mould_system.dir/widgets/customListwidget.cpp.obj.d"

@@ -18,12 +18,16 @@ collect::collect(QWidget *parent) :
     deviceCheckTimer(new QTimer(this)),
     lastCameraCount(0),
     imageCapture(nullptr),
-    statusLabel1(new QLabel(this)),  // 初始化第一个 QLabel
-    statusLabel2(new QLabel(this)),   // 初始化第二个 QLabel
+    statusLabel1(new QPushButton(this)),  // 初始化第一个 QLabel
+    statusLabel2(new QPushButton(this)),   // 初始化第二个 QLabel
+    statusLabel3(new QPushButton(this)),
+    position(new QPushButton(this)),
     my_database(new SQLDatabase("QODBC")),
     ui_param(nullptr),
     ui_label(new label),
-    count(0)
+    count(0),
+    Serial(new SerialCommunication(this)),
+    pulse_count(0)
 {
     ui->setupUi(this);
     /*准备工作*/
@@ -32,7 +36,8 @@ collect::collect(QWidget *parent) :
 
     ui->size->setCurrentIndex(3);
     lastCameraCount = Cameralist->count();
-    //qDebug()<<lastCameraCount;
+
+
     // 设置定时器
     deviceCheckTimer->setInterval(500);  // 每秒检查一次
     connect(deviceCheckTimer, &QTimer::timeout, this, &collect::checkCameraDevices);
@@ -40,14 +45,8 @@ collect::collect(QWidget *parent) :
     imageCapture = new QCameraImageCapture(Camera, this);
     connect(imageCapture, &QCameraImageCapture::imageCaptured, this, &collect::onImageCaptured);
 
-
-    statusLabel1->setText(QString::fromLocal8Bit("显微摄像头连接状态: 断开"));
-    statusLabel2->setText(QString::fromLocal8Bit("数据库连接状态: 断开"));
-    // 设置状态栏信息
-    statusBar()->addWidget(statusLabel1);
-    statusBar()->addWidget(statusLabel2);
-
-
+    //设置状态栏
+    setstatus();
     connect(ui_param,&param_manager::database_flush,this,[=](){
         populateMouldComboBox();
     });//刷新Qcombox内容
@@ -55,7 +54,19 @@ collect::collect(QWidget *parent) :
         ui_label->hide();
         this->show();
     });//实现界面的来回切换
+    connect(Serial,&SerialCommunication::serial_portFailopen,this,[=](){
+        QMessageBox::warning(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("串口打开失败，请检查电脑与单片机的接线是否接好"));
+    });//实现界面的来回切换
+    connect(Serial,&SerialCommunication::serial_senddata,this,&collect::onReceiveData);
+    ui->move_left->setEnabled(false);
+    ui->move_right->setEnabled(false);
 
+    connectStm32();//尝试单片机的连接
+    return_init();//启动应用程序时回零点
+    /*将初始速度写入单片机*/
+    emit ui->speed_axle->valueChanged(ui->speed_axle->value());
+    emit ui->speed_rotate->valueChanged(ui->speed_axle->value());
+    emit ui->speed_updown->valueChanged(ui->speed_axle->value());
 }
 
 collect::~collect()
@@ -136,17 +147,31 @@ void collect::checkCameraDevices()
 
 
     if(description_list.contains("UVC Camera")){
+        state.Camera = 1;
         statusLabel1->setText(QString::fromLocal8Bit("显微摄像头连接状态: 连接"));
     }
     else{
+        state.Camera = 0;
         statusLabel1->setText(QString::fromLocal8Bit("显微摄像头连接状态: 断开"));
     }
 
     if(this->my_database->isOpen()){
+        state.Database = 1;
         statusLabel2->setText(QString::fromLocal8Bit("数据库连接状态: 连接"));
     }
     else{
+        state.Database = 0;
         statusLabel2->setText(QString::fromLocal8Bit("数据库连接状态: 断开"));
+    }
+    if(!Serial->availablePorts().contains(QString("USB-SERIAL CH340"))){
+        statusLabel3->setText(QString::fromLocal8Bit("STM32单片机连接状态: 未连接"));
+        state.stm32 = 0;
+        ui->move_left->setEnabled(false);
+        ui->move_right->setEnabled(false);
+        ui->move_up->setEnabled(false);
+        ui->move_down->setEnabled(false);
+        ui->move_up_2->setEnabled(false);
+        ui->move_up_3->setEnabled(false);
     }
 
 }
@@ -179,6 +204,33 @@ void collect::handleDeviceChange()
     lastCameraCount = currentCount;
 }
 
+void collect::return_init()//让轴向电机回到右限位
+{
+    /*首先检查电机目前是否是在右限位位置*/
+    QByteArray read_right_signal;
+    read_right_signal.append(0x0D);
+    bool success = Serial->sendToSTM32(read_right_signal);
+    if(success){
+        bool finsh =waitForSignal(this,&collect::finish_receive,500);//等待接收到信号
+        if(finsh){//成功接收到
+            if(right_flag){//未在右限位位置
+                QByteArray data("\x0C", 1);
+                // 发送数据
+                success = Serial->sendToSTM32(data);
+                if(success){
+                    QMessageBox::information(this,QString::fromLocal8Bit("注意"),QString::fromLocal8Bit("电机正在回到初始位置，请勿操作界面"));
+                }
+            }
+        }
+        else{
+            QMessageBox::information(this,QString::fromLocal8Bit("未知错误"),QString::fromLocal8Bit("读限位标志失败，请联系技术支持"));
+        }
+    }
+    else{
+        QMessageBox::information(this,QString::fromLocal8Bit("未知错误"),QString::fromLocal8Bit("数据发送失败，请联系技术支持"));
+    }
+}
+
 void collect::onImageCaptured(int id, const QImage &preview)
 {
     Q_UNUSED(id);
@@ -208,6 +260,60 @@ void collect::onImageCaptured(int id, const QImage &preview)
 
 }
 
+void collect::onReceiveData(QByteArray data)
+{
+    for (int i = 0; i < data.size(); ++i)
+    {
+        quint8 byte = data.at(i);
+
+        if (waitingForStartCode)
+        {
+            if (byte == 0xAA) // 检测到起始码
+            {
+                waitingForStartCode = false;
+                receivingData = true;
+                receivedData_buff.clear();
+            }
+            else if(byte == 0xAB&&data.size()==2){
+                right_flag = data.at(1);
+                emit finish_receive();//通知return_init函数成功接收到信号
+
+            }
+        }
+        else if (receivingData)
+        {
+            receivedData_buff.append(byte);
+            if (receivedData_buff.size() == 4) // 已接收完32位数据
+            {
+                receivingData = false;
+                waitingForStopCode = true;
+            }
+        }
+        else if (waitingForStopCode)
+        {
+            if (byte == 0x55) // 检测到终止码
+            {
+                waitingForStopCode = false;
+                waitingForStartCode = true;
+                // 解析接收到的32位数据
+                quint32 axle_pulse_count = 0;
+                axle_pulse_count |= (static_cast<quint8>(receivedData_buff[0]) << 24);
+                axle_pulse_count |= (static_cast<quint8>(receivedData_buff[1]) << 16);
+                axle_pulse_count |= (static_cast<quint8>(receivedData_buff[2]) << 8);
+                axle_pulse_count |= (static_cast<quint8>(receivedData_buff[3]));
+                pulse_count = axle_pulse_count;
+                position->setText(QString::fromLocal8Bit("位置:")+QVariant(pulse_count).toString());
+            }
+            else{//异常
+                qDebug() << QString::fromLocal8Bit("异常");
+                waitingForStopCode = false;
+                waitingForStartCode = true;
+                break;
+            }
+        }
+    }
+}
+
 
 void collect::on_action_shot_triggered()
 {
@@ -231,6 +337,94 @@ void collect::setCameraResolution(const QSize &resolution)
         viewfinderSettings.setResolution(resolution);
         Camera->setViewfinderSettings(viewfinderSettings);
     }
+}
+
+void collect::setstatus()
+{
+    statusLabel1->setText(QString::fromLocal8Bit("显微摄像头连接状态: 断开"));
+    statusLabel2->setText(QString::fromLocal8Bit("数据库连接状态: 断开"));
+    statusLabel2->setText(QString::fromLocal8Bit("STM32单片机连接状态: 断开"));
+    position->setText(QString::fromLocal8Bit("位置:")+QVariant(pulse_count).toString());
+    // 创建占位控件（spacer）
+    QWidget* spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    // 设置状态栏信息
+    statusBar()->addWidget(statusLabel1);
+    statusBar()->addWidget(statusLabel2);
+    statusBar()->addWidget(statusLabel3);
+    statusBar()->addWidget(position);
+    statusBar()->addWidget(spacer); // 添加占位控件
+    statusBar()->addWidget(position); // position 将被推到右边
+    /*显示位置的地方添加回零点状态*/
+    connect(position, &QPushButton::clicked, [&]() {
+        QMenu menu;
+        menu.addAction(QString::fromLocal8Bit("回零点"), [&]() {
+            this->return_init();
+        });
+        // 设置菜单的宽度与按钮的宽度一致
+        menu.setFixedWidth(position->width());
+        QPoint buttonGlobalPos = position->mapToGlobal(QPoint(0, 0));
+        // 计算菜单的位置，使其显示在按钮的正上方
+        QPoint menuPos = buttonGlobalPos - QPoint(0, menu.sizeHint().height());
+        // 在按钮上方弹出菜单
+        menu.exec(menuPos);
+    });
+
+    /*串口*/
+    connect(statusLabel3, &QPushButton::clicked, [&]() {
+        QMenu menu;
+        menu.addAction(QString::fromLocal8Bit("断开单片机连接"), [&](){
+            closeStm32();
+        });
+        menu.addAction(QString::fromLocal8Bit("重新连接"), [&](){
+            connectStm32();
+        });
+        // 设置菜单的宽度与按钮的宽度一致
+        menu.setFixedWidth(statusLabel3->width());
+        QPoint buttonGlobalPos = statusLabel3->mapToGlobal(QPoint(0, 0));
+        // 计算菜单的位置，使其显示在按钮的正上方
+        QPoint menuPos = buttonGlobalPos - QPoint(0, menu.sizeHint().height());
+        // 在按钮上方弹出菜单
+        menu.exec(menuPos);
+    });
+
+}
+
+void collect::connectStm32()
+{
+    while(!Serial->availablePorts().contains(QString("USB-SERIAL CH340"))){
+         QMessageBox::warning(this, QString::fromLocal8Bit("提醒"), QString::fromLocal8Bit("请检查与单片机的接线"));
+    }
+    state.stm32 = 1;
+    if(!Serial->isOpen()){
+        QMap<QString,QString> port = Serial->availablePorts();
+        QString port_name = port["USB-SERIAL CH340"];
+        bool isopen = Serial->openSerialPort(port_name,9600);
+        if(!isopen){
+            QMessageBox::warning(this, QString::fromLocal8Bit("未知错误"), QString::fromLocal8Bit("串口打开失败,请联系技术人员"));
+            return;
+        }
+        ui->move_left->setEnabled(true);
+        ui->move_right->setEnabled(true);
+        ui->move_up->setEnabled(true);
+        ui->move_down->setEnabled(true);
+        ui->move_up_2->setEnabled(true);
+        ui->move_up_3->setEnabled(true);
+    }
+    statusLabel3->setText(QString::fromLocal8Bit("STM32单片机连接状态: 连接"));
+}
+
+void collect::closeStm32()
+{
+    state.stm32 = 0;
+    ui->move_left->setEnabled(false);
+    ui->move_right->setEnabled(false);
+    ui->move_up->setEnabled(false);
+    ui->move_down->setEnabled(false);
+    ui->move_up_2->setEnabled(false);
+    ui->move_up_3->setEnabled(false);
+    statusLabel3->setText(QString::fromLocal8Bit("STM32单片机连接状态: 未连接"));
+    Serial->closeSerialPort();
 }
 
 void collect::on_param_clicked()
@@ -278,3 +472,205 @@ void collect::on_action_label_triggered()
     ui_label->show();
 }
 
+
+void collect::on_move_left_pressed()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x01", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_left_released()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x03", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_right_pressed()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x02", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_right_released()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x03", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_up_pressed()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x04", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_up_released()
+{
+    QByteArray data("\x06", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_down_pressed()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x05", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_down_released()
+{
+    // 创建包含 0x00 的 QByteArray
+    QByteArray data("\x06", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_speed_axle_valueChanged(int arg1)
+{
+    // 提取低 16 位
+    quint16 low16 = static_cast<quint16>(arg1 & 0xFFFF);
+    // 将低 16 位拆分为两个字节
+    quint8 byte1 = static_cast<quint8>((low16 >> 8) & 0xFF); // 高字节
+    quint8 byte2 = static_cast<quint8>(low16 & 0xFF);        // 低字节
+    // 准备发送的数据（5个字节）
+    QByteArray dataToSend;
+    dataToSend.append(0x07);//开始接收码
+    dataToSend.append('\x00');//电机类型码
+    dataToSend.append(byte1);//电机速度高八位
+    dataToSend.append(byte2);//电机速度低八位
+    dataToSend.append(0x08);//停止接收码
+    // 发送数据
+    bool success = Serial->sendToSTM32(dataToSend);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_speed_updown_valueChanged(int arg1)
+{
+    // 提取低 16 位
+    quint16 low16 = static_cast<quint16>(arg1 & 0xFFFF);
+    // 将低 16 位拆分为两个字节
+    quint8 byte1 = static_cast<quint8>((low16 >> 8) & 0xFF); // 高字节
+    quint8 byte2 = static_cast<quint8>(low16 & 0xFF);        // 低字节
+    // 准备发送的数据（5个字节）
+    QByteArray dataToSend;
+    dataToSend.append(0x07);//开始接收码
+    dataToSend.append('\x01');//电机类型码
+    dataToSend.append(byte1);//电机速度高八位
+    dataToSend.append(byte2);//电机速度低八位
+    dataToSend.append(0x08);//停止接收码
+    // 发送数据
+    bool success = Serial->sendToSTM32(dataToSend);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_speed_rotate_valueChanged(int arg1)
+{
+    // 提取低 16 位
+    quint16 low16 = static_cast<quint16>(arg1 & 0xFFFF);
+    // 将低 16 位拆分为两个字节
+    quint8 byte1 = static_cast<quint8>((low16 >> 8) & 0xFF); // 高字节
+    quint8 byte2 = static_cast<quint8>(low16 & 0xFF);        // 低字节
+    // 准备发送的数据（5个字节）
+    QByteArray dataToSend;
+    dataToSend.append(0x07);//开始接收码
+    dataToSend.append('\x02');//电机类型码
+    dataToSend.append(byte1);//电机速度高八位
+    dataToSend.append(byte2);//电机速度低八位
+    dataToSend.append(0x08);//停止接收码
+    // 发送数据
+    bool success = Serial->sendToSTM32(dataToSend);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_up_2_pressed()//正转按下
+{
+    QByteArray data("\x09", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+
+void collect::on_move_up_2_released()//正转释放
+{
+    QByteArray data("\x0B", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+void collect::on_move_up_3_pressed()//反转按下
+{
+    QByteArray data("\x0A", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}
+
+void collect::on_move_up_3_released()//反转释放
+{
+    QByteArray data("\x0B", 1);
+    // 发送数据
+    bool success = Serial->sendToSTM32(data);
+    if(!success){
+        QMessageBox::information(this,QString::fromLocal8Bit("故障"),QString::fromLocal8Bit("数据发送失败,请联系技术支持"));
+    }
+}

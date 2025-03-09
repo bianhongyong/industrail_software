@@ -219,6 +219,9 @@ Qt5Widgets_DIR:PATH=D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5Wi
 //The directory containing a CMake configuration file for Qt5.
 Qt5_DIR:PATH=D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5
 
+//The directory containing a CMake configuration file for Qt5serialport.
+Qt5serialport_DIR:PATH=D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5SerialPort
+
 //Value Computed by CMake
 mould_system_BINARY_DIR:STATIC=D:/qt_apply/Mould_system/mould_system/build
 

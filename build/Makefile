@@ -382,6 +382,30 @@ param_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/param_manager.cpp.s
 .PHONY : param_manager.cpp.s
 
+serialcommunication.obj: serialcommunication.cpp.obj
+.PHONY : serialcommunication.obj
+
+# target to build an object file
+serialcommunication.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/serialcommunication.cpp.obj
+.PHONY : serialcommunication.cpp.obj
+
+serialcommunication.i: serialcommunication.cpp.i
+.PHONY : serialcommunication.i
+
+# target to preprocess a source file
+serialcommunication.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/serialcommunication.cpp.i
+.PHONY : serialcommunication.cpp.i
+
+serialcommunication.s: serialcommunication.cpp.s
+.PHONY : serialcommunication.s
+
+# target to generate assembly for a file
+serialcommunication.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mould_system.dir/build.make CMakeFiles/mould_system.dir/serialcommunication.cpp.s
+.PHONY : serialcommunication.cpp.s
+
 widgets/Abstract.obj: widgets/Abstract.cpp.obj
 .PHONY : widgets/Abstract.obj
 
@@ -566,6 +590,9 @@ help:
 	@echo "... param_manager.obj"
 	@echo "... param_manager.i"
 	@echo "... param_manager.s"
+	@echo "... serialcommunication.obj"
+	@echo "... serialcommunication.i"
+	@echo "... serialcommunication.s"
 	@echo "... widgets/Abstract.obj"
 	@echo "... widgets/Abstract.i"
 	@echo "... widgets/Abstract.s"

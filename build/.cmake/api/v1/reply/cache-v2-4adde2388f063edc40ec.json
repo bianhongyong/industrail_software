@@ -1150,6 +1150,18 @@
 			"value" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5"
 		},
 		{
+			"name" : "Qt5serialport_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for Qt5serialport."
+				}
+			],
+			"type" : "PATH",
+			"value" : "D:/software/Qt/Qt5.12.11/5.12.11/msvc2017_64/lib/cmake/Qt5SerialPort"
+		},
+		{
 			"name" : "mould_system_BINARY_DIR",
 			"properties" : 
 			[

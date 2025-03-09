@@ -19,6 +19,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/mould_system.dir/mould_system_autogen/mocs_compilation.cpp.obj.d"
   "CMakeFiles/mould_system.dir/param_manager.cpp.obj"
   "CMakeFiles/mould_system.dir/param_manager.cpp.obj.d"
+  "CMakeFiles/mould_system.dir/serialcommunication.cpp.obj"
+  "CMakeFiles/mould_system.dir/serialcommunication.cpp.obj.d"
   "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj"
   "CMakeFiles/mould_system.dir/widgets/Abstract.cpp.obj.d"
   "CMakeFiles/mould_system.dir/widgets/CustomTabView.cpp.obj"
