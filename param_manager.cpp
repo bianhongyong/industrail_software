@@ -34,10 +34,12 @@ void param_manager::closeEvent(QCloseEvent *event)
                                      QString::fromLocal8Bit("无法保存对数据库的修改。"));
                 event->ignore();
             }
-        } else if (reply == QMessageBox::No) {
+        }
+        else if (reply == QMessageBox::No) {
             sqlmodel->revertAll();
             event->accept();
-        } else {
+        }
+        else {
             event->ignore();
         }
     }

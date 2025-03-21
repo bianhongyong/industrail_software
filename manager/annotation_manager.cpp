@@ -24,7 +24,7 @@ Annotation_manager::Annotation_manager(const QString &filepath)
          Annotation_manager::categories = Annotation_manager::share_json["categories"].toArray();
          //qDebug() << "JSON object loaded successfully:" << share_json;
     } else {
-        //qDebug() << "JSON data is not an object.";
+         //qDebug() << "JSON data is not an object.";
     }
 }
 void Annotation_manager::add_category(const QString &label_name,const int & id){
@@ -105,7 +105,7 @@ void Annotation_manager::delete_annotation(const QString &image_name,int annotat
     QJsonArray annotation_image_list = Annotation_manager::annotations[image_name].toArray();
     annotation_image_list.removeAt(annotation_image_index);
     Annotation_manager::annotations[image_name] = annotation_image_list;
-    if(annotation_image_index==0){//删除完最后一个了，别忘记把整个都删除
+    if(annotation_image_index==0&&Annotation_manager::annotations[image_name].toArray().size()==0){//删除完最后一个了，别忘记把整个都删除
         Annotation_manager::annotations.remove(image_name);
     }
 }

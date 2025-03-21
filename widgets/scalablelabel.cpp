@@ -130,8 +130,17 @@ void ScalableLabel::paint_labels(const QList<annotation_item>& item){//TODO,可�
 
         QPainter offscreenPainter(&offscreenImage);
         offscreenPainter.setRenderHint(QPainter::Antialiasing);
-        QFont font("Arial", 12*scaleFactor, QFont::Bold);
+        // 动态计算字体参数
+        const int baseFontSize = 24; // 基准字号
+        QFont font("Arial");
+        font.setPixelSize(baseFontSize * scaleFactor); // 使用像素尺寸更精确
+        font.setWeight(QFont::Bold);
         offscreenPainter.setFont(font);
+
+        // 获取字体度量
+        QFontMetrics metrics(font);
+        const int textLineHeight = metrics.height();      // 单行文字高度
+        const int textMargin = fmax(2, 1 * scaleFactor); // 文字与框的最小间距
 
         for(int i = 0;i<item.count();++i){
             annotation_item annotation_temp = item[i];
@@ -140,9 +149,23 @@ void ScalableLabel::paint_labels(const QList<annotation_item>& item){//TODO,可�
             QPoint end_point(annotation_temp.end_point.x()*scaleFactor,annotation_temp.end_point.y()*scaleFactor);
             QRect rect(start_point, end_point);
             offscreenPainter.drawRect(rect);
-            QRect textRect(rect.left(), rect.top() - 20*scaleFactor, 300*scaleFactor, 20*scaleFactor);
+
             QString content =  QVariant(annotation_temp.category_index).toString()+QString("-")+annotation_temp.text;
-            offscreenPainter.drawText(textRect, Qt::AlignLeft,content);
+            // 动态计算文字区域
+            const int textWidth = metrics.horizontalAdvance(content) + 8; // 文字宽度+边距
+            const int textTop = rect.top() - textLineHeight - textMargin;
+            QRect textRect(
+                rect.left(),
+                textTop,
+                textWidth,
+                textLineHeight
+            );
+
+            offscreenPainter.drawText(
+                textRect.adjusted(2, 0, -2, 0), // 左右留出2px边距
+                Qt::AlignLeft | Qt::AlignVCenter,
+                content
+            );
         }
         painter.drawImage(0, 0, offscreenImage);
         this->setPixmap(current);

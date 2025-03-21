@@ -52,24 +52,39 @@ void CustomListWidget::set_MenuProvider(){
     }
 }
 QIcon CustomListWidget::createColorIcon(){
-    // 随机生成颜色
-       int r, g, b,saturation,value;
-       do {
-           r = QRandomGenerator::global()->bounded(256); // 0-255
-           g = QRandomGenerator::global()->bounded(256); // 0-255
-           b = QRandomGenerator::global()->bounded(256); // 0-255
-           QColor color(r, g, b);
-           saturation = color.saturation(); // 获取颜色的饱和度
-           value = color.value(); // 获取颜色的亮度
-       } while (saturation < 128 || value > 200); // 如果亮度大于128，重新生成
+    // 预定义的50种高区分度颜色（基于HSL色彩空间均匀分布）
+    static const QVector<QColor> predefinedColors = []() {
+        QVector<QColor> colors;
+        const int hueStep = 360 / 50;  // 色相步长
+        const int minSaturation = 180; // 最小饱和度（0-255）
+        const int maxSaturation = 230; // 最大饱和度
+        const int minLightness = 100;  // 最小亮度（0-255）
+        const int maxLightness = 150;  // 最大亮度
 
-       QColor color(r, g, b);
+        for (int i = 0; i < 50; ++i) {
+            // 均匀分布色相（0-359）
+            int hue = (i * hueStep) % 360;
 
-       // 创建一个 QPixmap 并填充颜色
-       QPixmap pixmap(16, 16);
-       pixmap.fill(color);
+            // 加入随机扰动增加变化
+            int saturation = QRandomGenerator::global()->bounded(minSaturation, maxSaturation);
+            int lightness = QRandomGenerator::global()->bounded(minLightness, maxLightness);
 
-       return QIcon(pixmap);
+            QColor color;
+            color.setHsl(hue, saturation, lightness);
+            colors.append(color);
+        }
+        return colors;
+    }();
+
+    // 随机选择一个颜色
+    int index = QRandomGenerator::global()->bounded(predefinedColors.size());
+    QColor color = predefinedColors[index];
+
+    // 创建图标
+    QPixmap pixmap(16, 16);
+    pixmap.fill(color);
+
+    return QIcon(pixmap);
 }
 void CustomListWidget::add_color_item(const QString &item_text){
      QListWidgetItem *item = new QListWidgetItem(createColorIcon(), item_text);

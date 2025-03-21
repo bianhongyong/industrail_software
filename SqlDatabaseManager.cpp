@@ -1,10 +1,4 @@
-﻿#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QVariant>
-#include <QDebug>
-#include "SqlDatabaseManager.h"
-#include <QSqlRecord>
+﻿#include "SqlDatabaseManager.h"
 SQLDatabase::SQLDatabase(const QString &driver):m_db(QSqlDatabase::addDatabase(driver,"connection")),m_driver(driver)  {
 
 }
@@ -18,14 +12,14 @@ SQLDatabase::~SQLDatabase() {
 bool SQLDatabase::open(const QVariantMap &params) {
     if (m_db.isOpen()){
         close();
-      }
+     }
     if (params.contains("database")) m_db.setDatabaseName(params["database"].toString());
     if (params.contains("host")) m_db.setHostName(params["host"].toString());
     if (params.contains("user")) m_db.setUserName(params["user"].toString());
     if (params.contains("password")) m_db.setPassword(params["password"].toString());
 
-    if (!m_db.open()) {
-
+    if (!m_db.open()){
+        qDebug()<<m_db.lastError();
         setError(m_db.lastError());
         return false;
     }

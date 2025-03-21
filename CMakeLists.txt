@@ -24,8 +24,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  Sql serialport REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets Sql serialport REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  Sql serialport Concurrent REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets Sql serialport Concurrent REQUIRED)
 set(PROJECT_SOURCES
         main.cpp
         label.cpp
@@ -49,6 +49,7 @@ set(PROJECT_SOURCES
         widgets/customvideo.h widgets/customvideo.cpp
         widgets/scalablelabel.cpp
         widgets/extendedcombobox.h widgets/extendedcombobox.cpp
+        widgets/dialog.h widgets/dialog.cpp dialog.ui
         manager/annotation_manager.h
         manager/annotation_manager.cpp
         resource.qrc
@@ -85,7 +86,8 @@ target_link_libraries(mould_system PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Multimedia
     Qt${QT_VERSION_MAJOR}::MultimediaWidgets
     Qt${QT_VERSION_MAJOR}::Sql
-    Qt${QT_VERSION_MAJOR}::SerialPort)
+    Qt${QT_VERSION_MAJOR}::SerialPort
+    Qt${QT_VERSION_MAJOR}::Concurrent)
 
 set_target_properties(mould_system PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

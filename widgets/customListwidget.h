@@ -38,6 +38,7 @@ signals:
     void delete_annotation(QListWidgetItem *item);//删除一个标注信号
     void delete_all_annotations();//删除一张图片所有标注信号
     void delete_imagefile(QListWidgetItem *item);
+    void delete_all_imagefile();//删除所有文件标记
 };
 
 #endif // CUSTOMLISTWIDGET_H

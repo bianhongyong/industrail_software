@@ -16,6 +16,11 @@
 #include <Qdir>
 #include <serialcommunication.h>
 #include <QEventLoop>
+#include <QQueue>
+#include <QThread>
+#include <QFuture>
+#include <QtConcurrent>
+#include <widgets/dialog.h>
 namespace Ui {
 class collect;
 }
@@ -40,7 +45,7 @@ protected slots:
     void on_comboBox_currentIndexChanged(const QString &arg1);
     void checkCameraDevices();    // 检查摄像头设备变化
     void handleDeviceChange();    // 处理设备变化
-    void return_init();           //回零点设置
+    void return_init();           // 回零点设置
 private slots:
     void onImageCaptured(int id, const QImage &preview);
     void onReceiveData(QByteArray data);
@@ -81,9 +86,17 @@ private slots:
 
     void on_move_up_3_pressed();
 
+    void on_action_collect_triggered();
+
+    void display_dialog(QString text);//显示非模态对话框
+
+    void close_dialog();//关闭对话框
 private:
     Ui::collect *ui;
     QCamera *Camera;
+
+    QQueue<QImage> imageQueue;
+    bool isProcessingQueue = false;
 
     void getCameras();//扫描新设备
     void startCamera();//开启摄像头采集
@@ -91,6 +104,9 @@ private:
     void setstatus();//设置状态栏信息
     void connectStm32();
     void closeStm32();
+    QString generateFilePath();
+    void processNextInQueue(); //处理任务队列
+    void handleSaveResult(bool success, const QString &filePath);
     QList<QCameraInfo> *Cameralist;
 
     QTimer *deviceCheckTimer;     // 用于定期检查设备的定时器
@@ -100,10 +116,12 @@ private:
     QPushButton *statusLabel1;
     QPushButton *statusLabel2;
     QPushButton *statusLabel3;
-    QPushButton *position;
+    QPushButton *axle_position;
+    QPushButton *updown_position;
     SQLDatabase *my_database;            //自定义数据库
     QSqlTableModel *model;              //数据库模型
-    param_manager *ui_param;
+    param_manager *ui_param;            //参数管理界面
+    Dialog *customDialog;               //自定义对话框，提示信息
 
     label *ui_label;//标注界面
     int count;//管理锁定
@@ -111,9 +129,14 @@ private:
     SerialCommunication *Serial;//串口管理
 
     ConnectState state;//连接状态
+    DbChecker *checker;
     /*stm32端参数*/
-    int pulse_count;//脉冲数量
-    bool right_flag = false;//右限位标志
+    quint32 axle_pulse_count;//轴向电机脉冲数量
+    quint32 rotate_pulse_count;//轴向电机脉冲数量
+    quint32 updown_pulse_count;//轴向电机脉冲数量
+    bool limit_flag = false;//右限位标志
+    bool check_dis_flag  = false;//检查是否在是否到达指定距离
+    bool is_autocollect_flag = false;//是否正在采集
     /*通讯变量*/
     QByteArray receivedData_buff;
     bool waitingForStartCode = true;
@@ -121,6 +144,8 @@ private:
     bool waitingForStopCode = false;
 signals:
     void finish_receive();
+    void check_dis(bool flag);
+    void finish_collect();
 };
 
 

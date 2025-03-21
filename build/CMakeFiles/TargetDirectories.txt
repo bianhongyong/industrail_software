@@ -1,4 +1,0 @@
-D:/qt_apply/Mould_system/mould_system/build/CMakeFiles/mould_system.dir
-D:/qt_apply/Mould_system/mould_system/build/CMakeFiles/edit_cache.dir
-D:/qt_apply/Mould_system/mould_system/build/CMakeFiles/rebuild_cache.dir
-D:/qt_apply/Mould_system/mould_system/build/CMakeFiles/mould_system_autogen.dir
