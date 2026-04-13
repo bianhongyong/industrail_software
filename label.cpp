@@ -254,6 +254,11 @@ void label::closeEvent(QCloseEvent *event){
     event->accept();
     emit this->close();
 }
+
+void label::showEvent(QShowEvent *event)
+{
+    paint_original();
+}
 void label::paint_update_slot(){
     paint_original();
     load_annotation_list();
@@ -267,7 +272,6 @@ void label::paint_original(){
         else{
             image_current_path=config.getImagesPath()+QDir::separator()+QString("not_labeled")+QDir::separator()+ui->file_list->currentItem()->text();
         }
-
         //qDebug()<<image_current_path;
         if(!imageCache.contains(image_current_path)){
             if(imageCache.size()>50){//缓冲区最多存50副图像
@@ -282,12 +286,10 @@ void label::paint_original(){
         // QPixmap pixmap;
         // pixmap.load(image_current_path);
         // pixmap = pixmap.scaled(640,640);
-
         ui->image->setPixmap(imageCache[image_current_path]);
         ui->image->originalPixmap = imageCache[image_current_path];
         ui->image->updatePixmap();
     }
-
 }
 void label::delete_annotation_slot(QListWidgetItem * item){
     // 创建一个 QMessageBox
@@ -405,10 +407,15 @@ void label::copyRecursively(const QString &srcPath, const QString &destPath)
 
 void label::on_action_save_triggered()
 {
+
     QString exportPath = QFileDialog::getExistingDirectory(this, QString::fromLocal8Bit("选择导出路径"), QDir::homePath());
     if (exportPath.isEmpty()) {
         return;
     }
+
+    Annotation_manager::save_json();
+    image_convert(ui->file_list->currentItem());
+    ui->image->clear();
     QString tempDirPath = QDir::tempPath() + QDir::separator() + "export_temp";
     QDir tempDir(tempDirPath);
 

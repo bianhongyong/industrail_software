@@ -55,6 +55,7 @@ private:
     void copyRecursively(const QString &srcPath, const QString &destPath);
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 signals:
     void close();

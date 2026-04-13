@@ -5,6 +5,7 @@
 ScalableLabel::ScalableLabel(QWidget *parent):QLabel(parent),scaleFactor(1.0){}
 
 void ScalableLabel::wheelEvent(QWheelEvent *event){ //有点问题,图像失真问题
+
     // 计算缩放比例
     if(event->modifiers() & Qt::ControlModifier ){
       if(!isDrawing&&!isDrawing_save){

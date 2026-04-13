@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>缺陷检测工控软件</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -46,7 +46,7 @@
          </font>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <property name="tabSpacing">
          <number>6</number>
@@ -57,7 +57,7 @@
            <x>0</x>
            <y>0</y>
            <width>800</width>
-           <height>147</height>
+           <height>185</height>
           </rect>
          </property>
          <attribute name="label">
@@ -207,7 +207,7 @@
            <x>0</x>
            <y>0</y>
            <width>800</width>
-           <height>147</height>
+           <height>185</height>
           </rect>
          </property>
          <attribute name="label">
@@ -390,19 +390,6 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="page4">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>800</width>
-           <height>147</height>
-          </rect>
-         </property>
-         <attribute name="label">
-          <string>缺陷检测</string>
-         </attribute>
-        </widget>
        </widget>
       </item>
       <item>
@@ -410,13 +397,10 @@
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>78</width>
-          <height>100</height>
+          <width>20</width>
+          <height>40</height>
          </size>
         </property>
        </spacer>
@@ -504,6 +488,7 @@
    <addaction name="separator"/>
    <addaction name="action_shot"/>
    <addaction name="action_collect"/>
+   <addaction name="action_defect"/>
    <addaction name="action_label"/>
    <addaction name="action_settings"/>
   </widget>
@@ -550,6 +535,15 @@
    </property>
    <property name="text">
     <string>标注</string>
+   </property>
+  </action>
+  <action name="action_defect">
+   <property name="icon">
+    <iconset resource="resource.qrc">
+     <normaloff>:/icons/icons/defect.png</normaloff>:/icons/icons/defect.png</iconset>
+   </property>
+   <property name="text">
+    <string>缺陷</string>
    </property>
   </action>
  </widget>

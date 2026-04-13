@@ -43,5 +43,4 @@ void param_manager::closeEvent(QCloseEvent *event)
             event->ignore();
         }
     }
-
 }

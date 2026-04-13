@@ -10,12 +10,18 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QDateTime>
+#include <QNetworkRequest>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 collect::collect(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::collect),
     Camera(nullptr),
+    message_ui(new mouldName_dialog()),
+    detect_ui(new detect_display()),
     Cameralist(new QList<QCameraInfo>),
     deviceCheckTimer(new QTimer(this)),
+    saveTimer(new QTimer(this)),
     lastCameraCount(0),
     imageCapture(nullptr),
     statusLabel1(new QPushButton(this)),  // 初始化第一个 QLabel
@@ -23,6 +29,7 @@ collect::collect(QWidget *parent) :
     statusLabel3(new QPushButton(this)),
     axle_position(new QPushButton(this)),
     updown_position(new QPushButton(this)),
+    remote_tcp(new QPushButton(this)),
     my_database(new SQLDatabase("QODBC")),
     ui_param(nullptr),
     customDialog(nullptr),
@@ -34,51 +41,43 @@ collect::collect(QWidget *parent) :
     rotate_pulse_count(0),
     updown_pulse_count(0)
 {
+
+    state.is_defecting=0;
+
     ui->setupUi(this);
     /*准备工作*/
     getCameras();//扫描相机
-
     ui->size->setCurrentIndex(3);
     lastCameraCount = Cameralist->count();
 
 
     // 设置定时器
-    deviceCheckTimer->setInterval(500);  // 每秒检查一次
+    deviceCheckTimer->setInterval(500);  // 每半秒检查一次
     connect(deviceCheckTimer, &QTimer::timeout, this, &collect::checkCameraDevices);
     deviceCheckTimer->start();
+    saveTimer->setInterval(30000);  // 每30秒自动保存一次
+    connect(saveTimer, &QTimer::timeout, this, [=](){
+        Annotation_manager::save_json();
+    });
+    saveTimer->start();
     imageCapture = new QCameraImageCapture(Camera, this);
+    imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
     connect(imageCapture, &QCameraImageCapture::imageCaptured, this, &collect::onImageCaptured);
-
+    signal_slot();//信号与槽的连接
     //设置状态栏
     setstatus();
-    connect(ui_param,&param_manager::database_flush,this,[=](){
-        populateMouldComboBox();
-    });//刷新Qcombox内容
-    connect(ui_label,&label::close,this,[=](){
-        ui_label->hide();
-        this->show();
-    });//实现界面的来回切换
-    connect(Serial,&SerialCommunication::serial_portFailopen,this,[=](){
-        QMessageBox::warning(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("串口打开失败，请检查电脑与单片机的接线是否接好"));
-    });//实现界面的来回切换
-    connect(Serial,&SerialCommunication::serial_senddata,this,&collect::onReceiveData);
-    connect(this,&collect::check_dis,this,[=](bool flag){
-    });
-    connect(this,&collect::finish_collect,[=]{
-        close_dialog();
-    });
     ui->move_left->setEnabled(false);
     ui->move_right->setEnabled(false);
     connectDatabase();//连接数据库与sql视图
     connectStm32();//尝试单片机的连接
-    return_init();//启动应用程序时回零点
+    //return_init();//启动应用程序时回零点
     /*将初始速度写入单片机*/
     if(state.stm32==1){
         emit ui->speed_axle->valueChanged(ui->speed_axle->value());
         emit ui->speed_rotate->valueChanged(ui->speed_axle->value());
         emit ui->speed_updown->valueChanged(ui->speed_axle->value());
     }
-
+    QThreadPool::globalInstance()->setMaxThreadCount(20);
 
 }
 
@@ -89,6 +88,7 @@ collect::~collect()
     delete ui_param;
     delete ui_label;
     delete my_database;
+    delete message_ui;
     checker->requestInterruption();
     checker->wait();
     delete checker;
@@ -201,7 +201,6 @@ void collect::checkCameraDevices()
         statusLabel3->setText(QString::fromLocal8Bit("STM32单片机连接状态: 未连接"));
         closeStm32();
     }
-
 }
 
 void collect::handleDeviceChange()
@@ -271,15 +270,20 @@ void collect::onImageCaptured(int id, const QImage &preview)
     QString resolution = ui->size->currentText();
     QStringList res = resolution.split(QString::fromLocal8Bit("×"));//TODO 编码隐患,导致分辨率长宽分离不出来
     int width = res[0].toInt();
-
     int height = res[1].toInt();
     QImage scaledImage = preview.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    imageQueue.enqueue(scaledImage);
 
-
-    // 如果没有处理线程在运行，则启动一个
-    if (!isProcessingQueue){
+    // 生成文件名
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString dateTimeString = currentDateTime.toString("yyyyMMddhhmmsszzz");
+    QString imageInfo = dateTimeString + ".jpg";
+    imageQueue.enqueue(ImagePair(scaledImage,imageInfo));
+    if(state.is_defecting==0){//如果是正常采集，则调用只保存的线程
+        // 如果没有处理线程在运行，则启动一个
         processNextInQueue();
+    }
+    else{//调用缺陷检测线程，异步传输数据
+        processNextInQueue_defect();
     }
 }
 
@@ -386,8 +390,6 @@ void collect::onReceiveData(QByteArray data)
                 updown_pulse_count |= (static_cast<quint8>(receivedData_buff[2]) << 8);
                 updown_pulse_count |= (static_cast<quint8>(receivedData_buff[3]));
                 updown_position->setText(QString::fromLocal8Bit("上下位置:")+QVariant(updown_pulse_count).toString());
-
-
             }
             else{//异常
                 //qDebug() << QString::fromLocal8Bit("异常");
@@ -406,6 +408,7 @@ void collect::on_action_shot_triggered()
         if(!imageCapture->isReadyForCapture()){
             delete imageCapture;
             imageCapture = new QCameraImageCapture(Camera, this);
+            imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
             connect(imageCapture, &QCameraImageCapture::imageCaptured, this, &collect::onImageCaptured);
         }
         imageCapture->capture();
@@ -430,6 +433,7 @@ void collect::setstatus()
     statusLabel3->setText(QString::fromLocal8Bit("STM32单片机连接状态: 断开"));
     axle_position->setText(QString::fromLocal8Bit("轴向位置:")+QVariant(axle_pulse_count).toString());
     updown_position->setText(QString::fromLocal8Bit("上下位置:")+QVariant(updown_pulse_count).toString());
+    remote_tcp->setText(QString::fromLocal8Bit("服务器连接状态:未连接"));
     // 创建占位控件（spacer）
     QWidget* spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -437,6 +441,7 @@ void collect::setstatus()
     statusBar()->addWidget(statusLabel1);
     statusBar()->addWidget(statusLabel2);
     statusBar()->addWidget(statusLabel3);
+    statusBar()->addWidget(remote_tcp);
     //statusBar()->addWidget(position);
     statusBar()->addWidget(spacer); // 添加占位控件
     statusBar()->addWidget(axle_position); // position 将被推到右边
@@ -537,32 +542,67 @@ void collect::processNextInQueue()
         return;
     }
     // 标记为正在处理
-        isProcessingQueue = true;
+    isProcessingQueue = true;
 
-        // 从队列中取出一个图像
-        QImage image = imageQueue.dequeue();
-        // 生成文件路径
-        QString filePath = generateFilePath();
+    // 从队列中取出一个图像
+    ImagePair image = imageQueue.dequeue();
+    // 生成文件路径
+    QString filePath = generateFilePath();
 
-        // 异步保存图像
-        QFuture<bool> future = QtConcurrent::run([=]() {
-            return image.save(filePath);
-        });
+    // 异步保存图像
+    QFuture<bool> future = QtConcurrent::run([=]() {
+        return image.first.save(filePath);
+    });
 
-        // 设置完成后的处理
-        QFutureWatcher<bool>* watcher = new QFutureWatcher<bool>(this);
-        connect(watcher, &QFutureWatcher<bool>::finished, this, [=]() {
-            // 处理保存结果
-            handleSaveResult(watcher->result(), filePath);
+    // 设置完成后的处理
+    QFutureWatcher<bool>* watcher = new QFutureWatcher<bool>(this);
+    connect(watcher, &QFutureWatcher<bool>::finished, this, [=]() {
+        // 处理保存结果
+        handleSaveResult(watcher->result(), filePath);
+        // 清理资源
+        watcher->deleteLater();
+        // 处理队列中的下一个图像
+        QTimer::singleShot(0, this, &collect::processNextInQueue);
+    });
 
-            // 清理资源
-            watcher->deleteLater();
+    watcher->setFuture(future);
 
-            // 处理队列中的下一个图像
-            QTimer::singleShot(0, this, &collect::processNextInQueue);
-        });
 
-        watcher->setFuture(future);
+}
+
+void collect::processNextInQueue_defect()
+{
+    // 如果队列为空，停止处理
+    if (imageQueue.isEmpty()){
+        isProcessingQueue = false;
+        return;
+    }
+
+    // 标记为正在处理
+    isProcessingQueue = true;
+    // 从队列中取出一个图像
+    ImagePair image = imageQueue.dequeue();
+    
+
+    //send_imagebyhttp(image.first, image.second);
+     // 创建图像发送任务
+     ImageSendRunTask *task = new ImageSendRunTask(image.first, image.second);
+     // 连接信号和槽 - 使用QueuedConnection确保在UI线程处理
+     connect(task, &ImageSendRunTask::sendSuccess, this, [this](const QImage &image, const QString &imageInfo) {
+         // 处理成功
+         this->handleImageSendSuccess(image, imageInfo);
+         // 处理队列中的下一个图像
+         //QTimer::singleShot(0, this, &collect::processNextInQueue_defect);
+     }, Qt::QueuedConnection);
+    
+     connect(task, &ImageSendRunTask::sendFailed, this, [this](const QImage &image, const QString &imageInfo) {
+         // 处理失败
+         this->handleImageSendFailed(image, imageInfo);
+         // 处理队列中的下一个图像
+         QTimer::singleShot(0, this, &collect::processNextInQueue_defect);
+     }, Qt::QueuedConnection);
+     // 提交任务到线程池
+     QThreadPool::globalInstance()->start(task);
 }
 QString collect::generateFilePath()
 {
@@ -596,19 +636,198 @@ void collect::handleSaveResult(bool success, const QString &filePath)
 //                           QString::fromLocal8Bit("图片保存失败"));
     }
 }
+
+void collect::signal_slot()
+{
+    connect(ui_param,&param_manager::database_flush,this,[=](){
+        populateMouldComboBox();
+    });//刷新Qcombox内容
+    connect(ui_label,&label::close,this,[=](){
+        //ui_label->hide();
+        this->show();
+    });//实现界面的来回切换
+    connect(message_ui,&mouldName_dialog::show_collect,this,[=](){
+        message_ui->hide();
+        this->show();
+    });//实现界面的来回切换
+    connect(detect_ui,&detect_display::close_signal,[=](){
+        this->show();
+    });
+
+    connect(Serial,&SerialCommunication::serial_portFailopen,this,[=](){
+        QMessageBox::warning(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("串口打开失败，请检查电脑与单片机的接线是否接好"));
+    });
+    connect(Serial,&SerialCommunication::serial_senddata,this,&collect::onReceiveData);
+    connect(this,&collect::check_dis,this,[=](bool flag){
+    });
+    connect(this,&collect::finish_collect,[=]{
+        close_dialog();
+    });//采集完成关闭窗口
+    connect(message_ui,&mouldName_dialog::start_detect,detect_ui,&detect_display::change_label);//传递参数
+    connect(message_ui,&mouldName_dialog::start_detect,this,[=](QString text){
+        detect_ui->show();
+        this->hide();
+        message_ui->hide();
+    });
+}
+
+bool collect::check_init()
+{
+    /*TODO 要检查初始状态是否达到要求
+    1.将数据库里的水平和上下距离发给单片机，待单片机校准(起始终止码: 0x0E 0x0F)
+    2.等待单片机的校准信号(0xAC)
+    3.若收到的校准信号合格，则开始回零点.不合格则提示用户调整 信号与槽机制
+    4.回零点完成后，提示用户正在采集，并显示采集信息(可商量)
+    */
+    QByteArray dataToSend;
+    dataToSend.append(0x0E);  //起始码
+    quint16 updown = model->record(ui->mould->currentIndex()).value(1).toUInt();
+    quint8 updown_high = static_cast<quint8>((updown >> 8) & 0xFF);   // 高字节
+    quint8 updown_low = static_cast<quint8>(updown & 0xFF);           // 低字节
+    dataToSend.append(updown_high);
+    dataToSend.append(updown_low);
+    quint16 horizon = model->record(ui->mould->currentIndex()).value(2).toUInt();
+    quint8 horizon_high = static_cast<quint8>((horizon >> 8) & 0xFF);  // 高字节
+    quint8 horizon_low = static_cast<quint8>(horizon & 0xFF);          // 低字节
+    dataToSend.append(horizon_high);
+    dataToSend.append(horizon_low);
+    dataToSend.append(0x0F);  // 终止码
+    bool success = Serial->sendToSTM32(dataToSend);
+    if (!success){
+        QMessageBox::warning(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("数据发送失败，请联系技术支持"));
+        return 0;
+    }
+    bool calibrationSuccess = waitForSignal(this, &collect::check_dis,5000);  // 等待 0.5 秒
+    if(!calibrationSuccess){//接收信号超时
+        QMessageBox::warning(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("未收到校准信号，请检查设备"));
+        return 0;
+    }
+
+    if(check_dis_flag==0){//摄像头没有调整到指定位置
+        QMessageBox::warning(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("摄像头未到达指定位置"));
+        return 0;
+    }
+    else{//若调整到指定位置就回零点
+        return_init();
+    }
+
+    return 1;
+}
+
+bool collect::send_image(const QImage &image,const QString &imageInfo)
+{
+    bool send_flag = 1;//是否发送成功标志
+
+    /*连接服务器端*/
+    QTcpSocket m_socket;
+
+    m_socket.connectToHost("211.81.50.204",55555);
+    send_flag = m_socket.waitForConnected(500);//等待连接,500ms
+    if(!send_flag){
+        return 0;
+    }
+
+    /*创建图像数据包*/
+
+    // 将图像转换为高质量无损字节数组
+    QByteArray imageData;
+    QBuffer buffer(&imageData);
+    buffer.open(QIODevice::WriteOnly);
+
+    // 使用最高质量的无损格式
+    QImageWriter writer(&buffer, "PNG");
+    writer.setQuality(100);  // 使用最高质量设置
+    writer.setCompression(0); // 使用最低压缩率（最高质量）
+    // 写入图像
+    writer.write(image);
+    buffer.close();
+    // 创建标准化的数据包
+    QByteArray data;
+    // 1. 添加起始标志 (4字节)
+    const char startFlag[] = {'I', 'M', 'G', 'P'};  // "IMGP" 作为图像包标识
+    data.append(startFlag, 4);
+
+    // 2. 添加图像描述信息长度 (4字节，使用网络字节序)
+    QByteArray infoBytes = imageInfo.toUtf8();
+    quint32 infoLength = infoBytes.size();
+    infoLength = qToBigEndian(infoLength);
+    data.append(reinterpret_cast<const char*>(&infoLength), 4);
+    // 3. 添加图像数据长度 (4字节，使用网络字节序)
+    quint32 imageLength = imageData.size();
+    imageLength = qToBigEndian(imageLength);
+    data.append(reinterpret_cast<const char*>(&imageLength), 4);
+    // 4. 添加图像描述信息 (变长)
+    data.append(infoBytes);
+    // 5. 添加图像数据 (变长)
+    data.append(imageData);
+
+    /*发送数据*/
+    qint64 bytesWritten = m_socket.write(data);
+    if (bytesWritten == -1) {
+        return 0;
+    }
+    m_socket.waitForBytesWritten();
+
+    if (!m_socket.waitForReadyRead(1000)) {//等待100ms确认消息
+        return 0;
+    }
+    QByteArray ack = m_socket.readAll();
+    if (ack == "ACK") {
+        return true;
+    }
+    else {
+        return false;
+    }
+    m_socket.close();
+
+}
+void collect::send_imagebyhttp(const QImage &image, const QString &image_name){
+    // 1. 转换图片为字节流
+    QByteArray imageData;
+    QBuffer buffer(&imageData);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG", 100);
+    buffer.close();
+
+    // 设置请求的 URL
+    QUrl url("http://211.81.50.204:1316");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentLengthHeader, imageData.size());
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "image/png");
+    request.setRawHeader("X-image-name", image_name.toUtf8());
+
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QNetworkReply *reply = manager->post(request, imageData);
+
+    connect(reply, &QNetworkReply::finished, this, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            // 上传成功
+            qDebug() << "Image uploaded successfully";
+        } else {
+            // 上传失败
+            qDebug() << "Image upload failed:" << reply->errorString();
+        }
+        reply->deleteLater();
+    });
+
+}
+
 void collect::on_param_clicked()
 {
+
     if(my_database->isOpen()){
         ui_param->show();
     }
     else{
          QMessageBox::critical(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("数据库未连接,无法打开"));
     }
+
 }
 
 void collect::populateMouldComboBox()
 {
-    if (!my_database->isOpen()) {
+    if (!my_database->isOpen()){
         QMessageBox::critical(this, QString::fromLocal8Bit("错误"), QString::fromLocal8Bit("数据库未连接"));
         return;
     }
@@ -947,9 +1166,60 @@ void collect::display_dialog(QString text)
 
 void collect::close_dialog()
 {
-    if (customDialog) {
+    if (customDialog){
         customDialog->close();
         customDialog = nullptr;
     }
 }
 
+
+void collect::on_action_defect_triggered()
+{
+    //TODO
+//    QMessageBox msgBox;
+//    msgBox.setInformativeText(QString::fromLocal8Bit("确认开始缺陷检测？"));
+//    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+//    msgBox.setDefaultButton(QMessageBox::Cancel);
+//    int ret = msgBox.exec();
+//    if(ret==QMessageBox::Cancel){
+//        return;
+//    }
+
+//    if(state.stm32==0){
+//        QMessageBox::information(this,QString::fromLocal8Bit("错误"),QString::fromLocal8Bit("单片机未连接，无法启动缺陷检测功能"));
+//        return;
+//    }
+//    if(state.Database==0){
+//        QMessageBox::information(this,QString::fromLocal8Bit("错误"),QString::fromLocal8Bit("数据库未连接，无法启动缺陷检测功能"));
+//        return;
+//    }
+//    if(ui->comboBox->currentText()!=QString::fromLocal8Bit("UVC Camera")){
+//        QMessageBox::information(this,QString::fromLocal8Bit("错误"),QString::fromLocal8Bit("未连接或未正确选择显微摄像头，无法启动缺陷检测功能"));
+//        return;
+//    }
+
+
+//    if(check_init()==0){//检查是否满足初始状态
+//        return;
+//    }
+
+    message_ui->show();
+    //this->hide();
+}
+
+void collect::handleImageSendSuccess(const QImage &image, const QString &imageInfo)
+{
+    qDebug() << QString::fromLocal8Bit("图片发送成功: ") << imageInfo;
+}
+
+void collect::handleImageSendFailed(const QImage &image, const QString &imageInfo)
+{
+    qDebug() << QString::fromLocal8Bit("图片发送失败: ") << imageInfo;
+    // 将图像重新加入队列，等待下一次处理
+    imageQueue.enqueue(ImagePair(image, imageInfo));
+}
+
+void collect::closeEvent(QCloseEvent *event)
+{
+
+}

@@ -26,6 +26,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia MultimediaWidgets  Sql serialport Concurrent REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia MultimediaWidgets Sql serialport Concurrent REQUIRED)
+
 set(PROJECT_SOURCES
         main.cpp
         label.cpp
@@ -58,6 +59,12 @@ set(PROJECT_SOURCES
         SqlDatabaseManager.cpp
         serialcommunication.cpp
         serialcommunication.h
+        widgets/detect_display.h widgets/detect_display.cpp widgets/detect_display.ui
+        widgets/mouldname_dialog.h widgets/mouldname_dialog.cpp widgets/mouldname_dialog.ui
+        tcp/tcpconnectionpool.h tcp/tcpconnectionpool.cpp
+        tcp/connectionworker.h tcp/connectionworker.cpp
+        tcp/tcp_test.h tcp/tcp_test.cpp
+        tcp/sendimage_task.h tcp/sendimage_task.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -93,6 +100,7 @@ set_target_properties(mould_system PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    WIN32_EXECUTABLE OFF
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

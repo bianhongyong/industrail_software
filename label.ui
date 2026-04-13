@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>label</string>
+   <string>标注软件</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -293,14 +293,14 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ScalableLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">widgets/scalablelabel.h</header>
+  </customwidget>
+  <customwidget>
    <class>CustomListWidget</class>
    <extends>QListWidget</extends>
    <header location="global">widgets/customlistwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ScalableLabel</class>
-   <extends>QLabel</extends>
-   <header location="global">widgets/Scalablelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

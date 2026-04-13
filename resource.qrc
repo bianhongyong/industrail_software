@@ -42,5 +42,6 @@
         <file>icons/settings.png</file>
         <file>icons/shot.png</file>
         <file>icons/label.png</file>
+        <file>icons/defect.png</file>
     </qresource>
 </RCC>
